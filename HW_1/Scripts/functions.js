@@ -118,7 +118,7 @@ function enterUser(user) {
     $("#disconnect-btn").show();
 
     $("#welcome-user").html(
-        "<h6>Welcome " + user.Name + " " + user.LastName + "</h6>"
+        "<h6>Welcome " + user.Name + " " + user.LastName + "  Points: "+user.Points+"</h6>"
     );
     if (user.IsAdmin == true) {
         $("#admin-panel-btn1").show();
