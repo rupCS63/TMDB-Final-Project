@@ -142,8 +142,8 @@
             getTables();
 
         });
-        function error() {
-            console.log("error");
+        function error(e) {
+            console.log(e);
         }
         function getTables() {
             ajaxCall("GET", "../api/users", "", getUserTableSuccess, error);
