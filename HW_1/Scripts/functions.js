@@ -16,6 +16,10 @@ $(document).ready(function () {
         sendQ();
     });
 
+    $("#send-quiz").on("click", function () {
+        checkAnswer($("input[name='choose']:checked").val())
+    });
+
     user = localStorage.getItem("user-login");
     if (user != null) {
         enterUser(user);
@@ -485,9 +489,9 @@ function sendQ() {
 
     switch (qType) {
         case 1: //1. number of seasons
-            objQ = {
+            objQ1 = {
                 question: `How much season there are in ${gSeason.name} ?`,
-                answer: gSeason.number_of_seasons,
+                answer: gSeason.number_of_seasons.toString(),
                 answers:
                     [(Math.floor(Math.random() * 10) + 1).toString(),
                     (Math.floor(Math.random() * 10) + 1).toString(),
@@ -495,10 +499,12 @@ function sendQ() {
                     gSeason.number_of_seasons.toString()
                     ]
             };
+            showQuestion(objQ1);
+            console.log(objQ1);
             break;
 
         case 2: //2. first air date - year
-            objQ = {
+            objQ2 = {
                 question: `When the series was first lanuch?`,
                 answer: gSeason.first_air_date.toString().substring(0, 4),
                 answers: [(Math.floor(Math.random() * 61) + 1960).toString(),
@@ -507,10 +513,12 @@ function sendQ() {
                 gSeason.first_air_date.toString().substring(0, 4)
                 ]
             };
+            showQuestion(objQ2);
+            console.log(objQ2);
             break;
 
         case 3: //3. one from the cast
-            objQ = {
+            objQ3 = {
                 question: `How much episodes there are in ${gSeason.name}`,
                 answer: gSeason.number_of_episodes.toString(),
                 answers: [(Math.floor(Math.random() * 250) + 1).toString(),
@@ -519,6 +527,8 @@ function sendQ() {
                 gSeason.number_of_episodes.toString()
                 ]
             };
+            showQuestion(objQ3);
+            console.log(objQ3);
             break;
 
         default:
@@ -526,11 +536,11 @@ function sendQ() {
             break;
     }
 
-    console.log(objQ);
-    showQuestion(objQ);
+
 }
 
-function showQuestion(obj) {
+function showQuestion(the_question) {
+    question = the_question
     $(".question").html('');
     $(".answer-1").html('');
     $(".answer-2").html('');
@@ -548,13 +558,36 @@ function showQuestion(obj) {
         }
     }
 
-    $(".question").html(obj.question);
-    $(".answer-1").html(obj.answers[numbers[0]]);
-    $(".answer-2").html(obj.answers[numbers[1]]);
-    $(".answer-3").html(obj.answers[numbers[2]]);
-    $(".answer-4").html(obj.answers[numbers[3]]);
+    $(".question").html(question.question);
+    $(".answer-1").html(question.answers[numbers[0]]);
+    $(".answer-2").html(question.answers[numbers[1]]);
+    $(".answer-3").html(question.answers[numbers[2]]);
+    $(".answer-4").html(question.answers[numbers[3]]);
+
+
+    $(".choose-r-1").val(question.answers[numbers[0]]);
+    $(".choose-r-2").val(question.answers[numbers[1]]);
+    $(".choose-r-3").val(question.answers[numbers[2]]);
+    $(".choose-r-4").val(question.answers[numbers[3]]);
 
 
 
+}
+
+function checkAnswer(user_answer) {
+    console.log("user_answer:" + user_answer)
+    console.log("the answer:" + question.answer)
+    $(".choose").prop("checked", false);
+
+    if (user_answer == question.answer) {
+        swal("CORRECT !", "You gain 5 points !!", "success");
+        api_add_points = "../api/Users?id=" + JSON.parse(localStorage.getItem('user-login')).Id
+        ajaxCall("PUT", api_add_points, "", AddPointsSuccessCB, error)
+        return false
+    }
+    else {
+        swal("WORNG", "maybe try again :)", "error");
+        return
+    }
 
 }
