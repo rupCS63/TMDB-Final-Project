@@ -372,13 +372,11 @@ function initSentBTN() {
 }
 
 function listenToNewMessages(gSeason) {
-    console.log(gSeason); //^^
-    console.log(user.Id); //^^
     chat.on("child_added", snapshot => {
         msg = {
             name: snapshot.val().name,
             msg: snapshot.val().msg,
-            userid: sanpshot.val().userid,
+            userid: JSON.parse(localStorage.getItem('user-login')).Id,
         }
         msgArr.push(msg)
         printMessage(msg);
@@ -386,8 +384,8 @@ function listenToNewMessages(gSeason) {
 }
 function printMessage(msg) {
     let str = `<div class="message">${msg.name}: ${msg.msg}</div>`;
-    //let temp = countMsgUser(msg.userid);
-    //console.lo);
+    //let countUserMsgs = countMsgUser(msg.userid);
+    //console.log( `number of msg ${msg.name} is ${countUserMsgs}`);
     reder_messages.innerHTML += str;
 }
 
@@ -443,10 +441,10 @@ function countMsgUser(user_id) {
     let countUserMsgs = 0;
     for (let i = 0; i < msgArr.length; i++) {
         if (msgArr[i].userid = user_id)
-            countMsgUser++;
+            countUserMsgs++;
     }
 
-    return countMsgUser;
+    return countUserMsgs;
 }
 //----------------------------END----------------------------------
 
