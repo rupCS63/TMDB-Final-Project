@@ -424,23 +424,24 @@ function printMessages(msgArr) {
     reder_messages.innerHTML = str;
 }
 
+//return the number of masseges by user id
 function countMsgUser(user_id) {
     //aray of count user msg
-    msgArr = [];
+    let msgArr1 = [];
     chat.once("value", snapshot => {
         snapshot.forEach(element => {
-            msg = {
+            msg1 = {
                 msg: element.val().msg,
                 name: element.val().name,
                 userid: element.val().userid,
             }
-            msgArr.push(msg)
+            msgArr1.push(msg1)
         });
     });
 
     let countUserMsgs = 0;
     for (let i = 0; i < msgArr.length; i++) {
-        if (msgArr[i].userid = user_id)
+        if (msgArr1[i].userid = user_id)
             countUserMsgs++;
     }
 
