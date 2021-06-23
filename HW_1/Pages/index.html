@@ -5,8 +5,7 @@
     <title></title>
 
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-    <!-- <link rel="stylesheet" href="../Scripts/myCSS.css"> -->
-    <link rel="stylesheet" href="myCSS.css">
+    <link rel="stylesheet" href="../Scripts/myCSS.css">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -111,7 +110,7 @@
                 </div>
             </div>
             <div class="quizz-btn">
-                <button class="myButton" onclick="" id="quizz-btn">
+                <button class="myButton" id="quizz-btn1">
                 </button>
             </div>
             <div class="render-recommendations"></div>
@@ -270,36 +269,58 @@
     <div class="container-tvshow"></div>
     <!--<div id="myModal" class="modal">
         <div class="container modal-content">-->
-            <!--QUIZZ-->
+    <!--QUIZZ-->
     <div id="myModal" class="modal">
-        <div class="container modal-content">
-            <div id="quiz">
-            <button id="close-quiz">Close</button>
-            texta
-            </div>
+        <div class="quizz-window">
+
+            <div class="quizcontainer">
+                <div class="choose-1">
+                    <input type="radio" name="choose" value="" class="choose"><br>
+                </div>
+                <div class="choose-2">
+                    <input type="radio" name="choose" value="" class="choose"><br>
+                </div>
+                <div class="choose-3">
+                    <input type="radio" name="choose" value="" class="choose"><br>
+                </div>
+                <div class="choose-4">
+                    <input type="radio" name="choose" value="" class="choose"><br>
+                </div>
+                <div class="question"></div>
+                <div class="answer-1 answer"></div>
+                <div class="answer-2 answer"></div>
+                <div class="answer-3 answer"></div>
+                <div class="answer-4 answer"></div>
+                <div class="send-answer-btn">
+                    <button id="send-quiz" class="myButton">Send</button>
+
+                </div>
+
+
             </div>
         </div>
+    </div>
 
-            <!-- The core Firebase JS SDK is always required and must be listed first -->
-            <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-            <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
-            <!-- TODO: Add SDKs for Firebase products that you want to use
-        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+    https://firebase.google.com/docs/web/setup#available-libraries -->
 
-            <script>
-                // Your web app's Firebase configuration
-                var firebaseConfig = {
-                    apiKey: "AIzaSyBz9rswO-KJiBnLUlacieYwUT9KgTOeCGo",
-                    authDomain: "tmdb-chat.firebaseapp.com",
-                    projectId: "tmdb-chat",
-                    storageBucket: "tmdb-chat.appspot.com",
-                    messagingSenderId: "736288363968",
-                    appId: "1:736288363968:web:32b5ea5dc4ac4e47a62425",
-                    databaseURL: "https://tmdb-chat-default-rtdb.europe-west1.firebasedatabase.app"
-                };
-                // Initialize Firebase
-                firebase.initializeApp(firebaseConfig);
-            </script>
-            <script src="../Scripts/functions.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBz9rswO-KJiBnLUlacieYwUT9KgTOeCGo",
+            authDomain: "tmdb-chat.firebaseapp.com",
+            projectId: "tmdb-chat",
+            storageBucket: "tmdb-chat.appspot.com",
+            messagingSenderId: "736288363968",
+            appId: "1:736288363968:web:32b5ea5dc4ac4e47a62425",
+            databaseURL: "https://tmdb-chat-default-rtdb.europe-west1.firebasedatabase.app"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script src="../Scripts/functions.js"></script>
 </body>
 </html>

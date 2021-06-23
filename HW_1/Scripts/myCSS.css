@@ -1,7 +1,5 @@
 
-.Menu {
-    box-shadow: -1px 12px 20px 13px black;
-}
+
 #welcome-user {
     color: white;
 }
@@ -61,17 +59,19 @@ h6#episod-name {
 /* CHAT STRAT */
 .chat-window {
     border: 2px rgba(255, 255, 255, 0.486) solid;
-    height: 100%;
+    /* height: 100%; */
     border-radius: 10px;
     background-color: #00000073;
+    /* overflow:hidden; */
+    margin-bottom: 10px;
 }
 
 #chat-input {
-    margin-top: 100%;
     margin-bottom: 10px;
     margin-left: 5px;
     border-radius: 5px;
     width: 70%;
+    margin-top: 5px;
 }
 
 .message {
@@ -89,9 +89,17 @@ h6#episod-name {
     overflow-y: scroll;
     border-radius: 10px;
     background-color: #FFF;
-    height: 45%;
-    width: 21.9%;
-    position: absolute;
+    height: 400px;
+    max-height: 400;
+}
+
+#chat-name {
+    font-size: 30px;
+    text-align: center;
+    text-shadow: 5px 0 8px black;
+    color: white;
+    font-weight: 300;
+    font-family: monospace;
 }
 /* CHAT END */
 .myButton {
@@ -165,6 +173,23 @@ h6#episod-date {
     width: 90%;
 }
 
+/* #chat-message::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
+
+#chat-message::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+#chat-message::-webkit-scrollbar-thumb {
+    border-radius: 15px;
+    background-color: #FFF;
+    background-image: -webkit-gradient(linear, 40% 0%, 75% 84%, from(#000000), to(rgb(0, 0, 0)), color-stop(.6,#000000))
+} */
+
 
 #style-15::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
@@ -194,153 +219,226 @@ h6#episod-date {
     border-radius: 10px;
 }
 
-button#quizz-btn {
-    margin-right: 5px;
-    font-size: 15px;
-    background-color: #953ced99;
-}
 /* GRID START */
 .gcontainer {
-  display: grid;
-  grid-template-columns: 0.2fr 1.6fr 1.4fr 1.6fr 0.2fr;
-  grid-template-rows: 0.6fr 0.4fr 2fr 1fr 1.7fr 0.3fr;
-  gap: 0px 0px;
-  grid-auto-flow: row;
-  grid-template-areas:
-    "Menu Menu Menu Menu Menu"
-    ". search search search ."
-    ". content content content ."
-    ". content content content ."
-    ". content content content ."
-    ". . made-by . .";
+    display: grid;
+    grid-template-columns: 0.2fr 1.6fr 1.4fr 1.6fr 0.2fr;
+    grid-template-rows: 0.6fr 0.4fr 2fr 1fr 1.7fr 0.3fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "Menu Menu Menu Menu Menu"
+        ". search search search ."
+        ". content content content ."
+        ". content content content ."
+        ". content content content ."
+        ". . made-by . .";
 }
 
 .Menu {
-  display: grid;
-  grid-template-columns: 0.8fr 1.2fr 1.5fr 0.7fr 0.7fr 1.1fr;
-  grid-template-rows: 0.9fr 1.1fr 1fr;
-  gap: 0px 0px;
-  grid-auto-flow: row;
-  grid-template-areas:
-    "logo . . . . ."
-    "logo your-fav-tv . login register wellcome"
-    "logo . . . admin-panel-btn disconnect-btn";
-  grid-area: Menu;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr 1.5fr 0.7fr 0.7fr 1.1fr;
+    grid-template-rows: 0.9fr 1.1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "logo . . . . ."
+        "logo your-fav-tv . login register wellcome"
+        "logo . . . admin-panel-btn disconnect-btn";
+    grid-area: Menu;
 }
 
-.register { grid-area: register; }
+.register {
+    grid-area: register;
+}
 
-.login { grid-area: login; }
+.login {
+    grid-area: login;
+}
 
-.logo { grid-area: logo; }
+.logo {
+    grid-area: logo;
+}
 
-.your-fav-tv { grid-area: your-fav-tv; }
+.your-fav-tv {
+    grid-area: your-fav-tv;
+}
 
-.wellcome { grid-area: wellcome; }
+.wellcome {
+    grid-area: wellcome;
+}
 
-.disconnect-btn { grid-area: disconnect-btn; }
+.disconnect-btn {
+    grid-area: disconnect-btn;
+}
 
-.admin-panel-btn { grid-area: admin-panel-btn; }
+.admin-panel-btn {
+    grid-area: admin-panel-btn;
+}
 
 .search {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 0.8fr 1.1fr 1.1fr;
-  gap: 0px 0px;
-  grid-auto-flow: row;
-  grid-template-areas:
-    ". . ."
-    "search-text search-text search-btn"
-    ". . .";
-  grid-area: search;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 0.8fr 1.1fr 1.1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        ". . ."
+        "search-text search-text search-btn"
+        ". . .";
+    grid-area: search;
 }
 
-.search-text { grid-area: search-text; }
+.search-text {
+    grid-area: search-text;
+}
 
-.search-btn { grid-area: search-btn; }
+.search-btn {
+    grid-area: search-btn;
+}
 
-.made-by { grid-area: made-by; }
+.made-by {
+    grid-area: made-by;
+}
 
 .content {
-  display: grid;
-  grid-template-columns: 1fr 1.7fr 0.3fr 1.4fr 0.6fr 0.6fr 1.4fr 1fr 1.4fr 0.6fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  gap: 0px 0px;
-  grid-auto-flow: row;
-  grid-template-areas:
-    "tv-show-image tv-show-image tv-show-name tv-show-name . . season-render chat chat ."
-    "tv-show-image tv-show-image tv-show-overview tv-show-overview tv-show-overview tv-show-overview . chat chat ."
-    "tv-show-image tv-show-image tv-show-overview tv-show-overview tv-show-overview tv-show-overview quizz-btn chat chat ."
-    "render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes"
-    "render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes"
-    "render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations"
-    "render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations";
-  grid-area: content;
+    display: grid;
+    grid-template-columns: 1fr 1.7fr 0.3fr 1.4fr 0.6fr 1fr 1fr 1fr 1.4fr 0.6fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "tv-show-image tv-show-image tv-show-name tv-show-name . . season-render chat chat ."
+        "tv-show-image tv-show-image tv-show-overview tv-show-overview tv-show-overview tv-show-overview . chat chat ."
+        "tv-show-image tv-show-image tv-show-overview tv-show-overview tv-show-overview tv-show-overview quizz-btn chat chat ."
+        "render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes"
+        "render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes render-episodes"
+        "render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations"
+        "render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations render-recommendations";
+    grid-area: content;
+    box-shadow: 6px 12px 10px 4px rgb(54 53 53 / 58%);
+    background-image: linear-gradient(0deg, #000000fc 0%, #009efd 100%);
+    height: 100%;
 }
 
-.render-episodes { grid-area: render-episodes; }
+.render-episodes {
+    grid-area: render-episodes;
+}
 
-.render-recommendations { grid-area: render-recommendations; }
+.render-recommendations {
+    grid-area: render-recommendations;
+}
 
-.tv-show-name { grid-area: tv-show-name; }
+.tv-show-name {
+    grid-area: tv-show-name;
+}
 
-.chat { grid-area: chat; }
+.chat {
+    grid-area: chat;
+}
 
-.quizz-btn { grid-area: quizz-btn; }
+.season-render {
+    grid-area: season-render;
+}
 
-.tv-show-overview { grid-area: tv-show-overview; }
+.quizz-btn {
+    grid-area: quizz-btn;
+}
 
-.tv-show-image { grid-area: tv-show-image; }
+.tv-show-overview {
+    grid-area: tv-show-overview;
+    color: white;
+    font-size: 20px;
+    font-weight: 300;
+}
 
-.season-render { grid-area: season-render; }
+.tv-show-image {
+    grid-area: tv-show-image;
+}
+
 
 .Menu {
     box-shadow: -1px 12px 20px 13px black;
 }
 
-/* GRID END */
+/* GRID END*/
+/*QUIZ*/
 
-
-
-/*START QUIZZ*/
-
-
-
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+.quizcontainer {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 0.4fr 2fr 0.8fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        ". question ."
+        "choose-1 answer-1 ."
+        "choose-2 answer-2 ."
+        "choose-3 answer-3 ."
+        "choose-4 answer-4 send-answer-btn";
 }
 
-/* Modal Content/Box */
-.modal-content {
-    background-color: #fefefe;
-    border: 1px solid #888;
-    margin-top: 30%;
-    height: 300px;
-    width: 300px;
+.choose-1 {
+    grid-area: choose-1;
 }
 
-/* The Close Button */
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+.choose-2 {
+    grid-area: choose-2;
 }
 
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
-/*END QUIZZ*/
+.choose-3 {
+    grid-area: choose-3;
+}
+
+.choose-4 {
+    grid-area: choose-4;
+}
+
+.question {
+    grid-area: question;
+}
+
+.answer-1 {
+    grid-area: answer-1;
+}
+
+.answer-2 {
+    grid-area: answer-2;
+}
+
+.answer-3 {
+    grid-area: answer-3;
+}
+
+.answer-4 {
+    grid-area: answer-4;
+}
+
+.send-answer-btn {
+    grid-area: send-answer-btn;
+}
+
+
+.quizz-window {
+    width: 500px;
+    height: 400px;
+    margin-top: 10%;
+    background-color: #5ae0b8;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 15px;
+    box-shadow: black;
+    box-shadow: 7px 8px 10px 9px rgb(54 53 53 / 58%);
+}
+
+.choose {
+    margin-left: 50%;
+}
+
+.question {
+    font-size: 19px;
+    font-weight: 600;
+    text-align: center;
+    padding: 5px;
+}

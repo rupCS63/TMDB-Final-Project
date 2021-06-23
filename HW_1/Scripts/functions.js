@@ -7,11 +7,14 @@ $(document).ready(function () {
     $("#disconnect-btn").hide();
     $("#disconnect-btn").click(disconnectUser);
     $("#admin-panel-btn1").hide();
-    $('#quizz-btn').hide();
+    $('#quizz-btn1').hide();
     $('.chat').hide();
 
     //Randeer popular series by genre (35=comedy)
     //getFavSeries(35);
+    $("#quizz-btn1").click(function () {
+        sendQ();
+    });
 
     user = localStorage.getItem("user-login");
     if (user != null) {
@@ -27,28 +30,29 @@ $(document).ready(function () {
     imagePath = "https://image.tmdb.org/t/p/w500";
 });
 
-//Get the most popular series by genre -?-
+//Get the most popular series by genre
 function getFavSeries(genre) {
     //int genre = genre code
     //https://api.themoviedb.org/3/discover/tv?api_key=1e5a5ee20af326aebb685a34a1868b76&sort_by=popularity.desc&with_genres=35
 
     let apiSearch = `https://api.themoviedb.org/3/discover/tv?api_key=1e5a5ee20af326aebb685a34a1868b76&sort_by=popularity.desc&with_genres= ${genre}`;
 
-    ajaxCall("GET", apiSearch, "", getSeriesPopByGenreSuccessCB, error)
+    ajaxCall("GET", apiSearch, "", getSeriesPopByGenreSuccessCB, getSeriesPopByGenreErrorCB)
 
-}
-
-function error(e) {
-    alert(`Error: ${e.toString()}`);
 }
 
 function getSeriesPopByGenreSuccessCB(seriesList) {
     console.log(seriesList);
 }
 
+function getSeriesPopByGenreErrorCB() {
+    alert("Error");
+}
+
 function disconnectUser() {
     localStorage.clear();
     location.reload();
+
 }
 
 function postSeries(curr_tvshow) {
@@ -69,13 +73,18 @@ function postSeries(curr_tvshow) {
         api,
         JSON.stringify(SeriesObj),
         postSeriesSuccessCB,
-        error
+        postSeriesErrorCB
     );
 }
 
 function postSeriesSuccessCB() {
     console.log("Series added")
     postEpisod(episodnum);
+}
+
+function postSeriesErrorCB() {
+    console.log("Series error")
+
 }
 
 function userLoginToSystme(user) {
@@ -90,7 +99,7 @@ function userLoginToSystme(user) {
     $("#welcome-user").html(
         "<h6>Welcome " + user.Name + " " + user.LastName + "</h6>"
     );
-    if(user.IsAdmin == true){
+    if (user.IsAdmin == true) {
         $("#admin-panel-btn1").show();
     }
 }
@@ -104,7 +113,7 @@ function enterUser(user) {
     $("#welcome-user").html(
         "<h6>Welcome " + user.Name + " " + user.LastName + "</h6>"
     );
-    if(user.IsAdmin == true){
+    if (user.IsAdmin == true) {
         $("#admin-panel-btn1").show();
     }
 }
@@ -118,8 +127,12 @@ function loginUser() {
     console.log(passwordlogin);
     api = "../api/Users?mail=" + userlogin + "&password=" + passwordlogin;
     console.log(api);
-    ajaxCall("GET", api, "", loginUserSuccessCB, error);
+    ajaxCall("GET", api, "", loginUserSuccessCB, loginUserErrorCB);
     return false;
+}
+
+function loginUserErrorCB(e) {
+    alert(e.responseJSON);
 }
 
 function loginUserSuccessCB(user) {
@@ -167,14 +180,18 @@ function postUser() {
         api,
         JSON.stringify(userObj),
         postUserSuccessCB,
-        error
+        postUserErrorCB
     );
     return false;
 }
 
+function postUserErrorCB() {
+    alert("fail to add user");
+}
+
 function postUserSuccessCB() {
-    alert("User added. Please login ");
-    //add to localStorage
+    alert("user added");
+    //add to  localStorage
 }
 
 function getTV() {
@@ -185,7 +202,7 @@ function getTV() {
     let moreParams = "&language=en-US&page=1&include_adult=false&";
     let query = "query=" + encodeURIComponent(name);
     let apiCall = url + method + api_key + moreParams + query;
-    ajaxCall("GET", apiCall, "", getTVSuccessCB, error);
+    ajaxCall("GET", apiCall, "", getTVSuccessCB, getTVErrorCB);
 }
 
 function getTVSuccessCB(tv) {
@@ -198,7 +215,7 @@ function getTVSuccessCB(tv) {
     let api_key = "api_key=" + key;
     let apiCall = url + method + tvId + "?" + api_key; //^ change seasson 1 to multi
 
-    ajaxCall("GET", apiCall, "", getSeasonSuccessCB, error);
+    ajaxCall("GET", apiCall, "", getSeasonSuccessCB, getSeasonErrorCB);
 }
 
 function renderSeason(season) {
@@ -241,7 +258,7 @@ function getEpisode(value) {
         api_key +
         "&language=en-US";
 
-    ajaxCall("GET", apiCall, "", getEpisodeSuccessCB, error);
+    ajaxCall("GET", apiCall, "", getEpisodeSuccessCB, getEpisodeErrorCB);
 }
 
 function getEpisodeSuccessCB(episod) {
@@ -284,11 +301,10 @@ function postEpisod(i) {
         Description: epi.episodes[i].overview,
         BroadcastDate: epi.episodes[i].air_date,
     };
-
     var user_id = JSON.parse(localStorage.getItem('user-login')).Id;
     let api = "../api/Episodes?id=" + user_id;
+    ajaxCall("POST", api, JSON.stringify(episodeObj), postEpisodSuccessCB, postEpisodErrorCB);
 
-    ajaxCall("POST", api, JSON.stringify(episodeObj), postEpisodSuccessCB, error);
 }
 
 function postEpisodSuccessCB(i) {
@@ -300,19 +316,35 @@ function postEpisodSuccessCB(i) {
     }
 }
 
+function postEpisodErrorCB() {
+    console.log(err);
+}
+
+function getEpisodeErrorCB() {
+    console.log(err);
+}
 
 function getSeasonSuccessCB(season) {
     gSeason = season;
     renderChat(gSeason);
     renderSeason(season);
-    initQuestionbtn();  
+    initQuestionbtn();
+
+}
+function initQuestionbtn() {
+    $('#quizz-btn1').show();
+    $('#quizz-btn1').html(`Take Question about ${gSeason.name}`)
 }
 
-//-------------CHAT-----------------
-function initQuestionbtn(){
-    $('#quizz-btn').show();
-    $('#quizz-btn').html(`Take Question about ${gSeason.name}`)
+function getSeasonErrorCB(err) {
+    console.log(err);
 }
+
+function getTVErrorCB(err) {
+    console.log(err);
+}
+
+// CHAT START
 
 function renderChat(gSeason) {
     initChat(gSeason)
@@ -324,22 +356,27 @@ function renderChat(gSeason) {
 
 }
 
-function initChat(){
+
+function initChat() {
     $('.chat').show();
     $("#chat-name").html(`${gSeason.name} Chat`)
     active = false;
     msgArr = [];
     chat = firebase.database().ref(gSeason.name);
     reder_messages = document.getElementById("chat-messages");
-    //$('#chat-name').val(gSeason.name + ' Chat')
-    
+    $('#chat-name').val(gSeason.name + ' Chat')
+    // msg = 'hey1'
+    // chat.push().set({"msg":msg,"name":JSON.parse(localStorage.getItem('user-login')).Name});
+    getMSGfromDB()
     // listen to incoming messages
     initSentBTN()
     listenToNewMessages()
-}
 
-function initSentBTN(){
-    $("#chat-input").keyup(function(event) {
+
+
+}
+function initSentBTN() {
+    $("#chat-input").keyup(function (event) {
         if (event.keyCode === 13) {
             $("#chat-send-btn").click();
         }
@@ -347,7 +384,8 @@ function initSentBTN(){
 }
 
 function listenToNewMessages() {
- 
+    // child_added will be evoked for every child that was added
+    // on the first entry, it will bring all the childs
     chat.on("child_added", snapshot => {
         msg = {
             name: snapshot.val().name,
@@ -357,7 +395,6 @@ function listenToNewMessages() {
         printMessage(msg);
     })
 }
-
 function printMessage(msg) {
     let str = `<div class="message">${msg.name}: ${msg.msg}</div>`;
     reder_messages.innerHTML += str;
@@ -365,12 +402,11 @@ function printMessage(msg) {
 
 function AddMSG() {
     let msg = $('#chat-input').val()
-    if(msg === ""){
+    if (msg === "") {
         return
     }
     let name = JSON.parse(localStorage.getItem('user-login')).Name
-    let id = JSON.parse(localStorage.getItem('user-login')).Id
-    chat.push().set({"msg":msg,"name":name,"id":id});
+    chat.push().set({ "msg": msg, "name": name });
     $('#chat-input').val('')
     return
 }
@@ -382,18 +418,17 @@ function getMSGfromDB() {
     chat.once("value", snapshot => {
         snapshot.forEach(element => {
             msg = {
-            msg:element.val().msg,
-            name: element.val().name,
-            id: element.val().id
-        }
-         msgArr.push(msg)
+                msg: element.val().msg,
+                name: element.val().name,
+            }
+            msgArr.push(msg)
         });
         printMessages(msgArr);
     })
 
 }
 
-function printMessages(msgArr){
+function printMessages(msgArr) {
     var str = "";
     for (let index = 0; index < msgArr.length; index++) {
         const msg = msgArr[index];
@@ -401,7 +436,7 @@ function printMessages(msgArr){
     }
     reder_messages.innerHTML = str;
 }
-// -----------------CHAT END-----------------
+// CHAT END
 
 
 
@@ -410,10 +445,10 @@ function printMessages(msgArr){
 var modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
-var btn = document.getElementById("quizz-btn");
+var btn = document.getElementById("quizz-btn1");
 
 // Get the <span> element that closes the modals
-var span = document.getElementById("close-quiz");
+var span = document.getElementById("send-quiz");
 
 // When the user clicks on the button, open the modal
 btn.onclick = function () {
@@ -431,7 +466,10 @@ window.onclick = function (event) {
         modal.style.display = "none";
     }
 }
-//Quiz END:
+
+
+
+
 
 
 //return: obj: q,4 answers, answer.
@@ -448,13 +486,14 @@ function sendQ() {
     switch (qType) {
         case 1: //1. number of seasons
             objQ = {
-                question: `How much season there are in ${gSeason.Name} ?`,
+                question: `How much season there are in ${gSeason.name} ?`,
                 answer: gSeason.number_of_seasons,
-                answers: [(Math.floor(Math.random() * 10) + 1).toString(),
-                (Math.floor(Math.random() * 10) + 1).toString(),
-                (Math.floor(Math.random() * 10) + 1).toString(),
-                gSeason.number_of_seasons
-                ]
+                answers:
+                    [(Math.floor(Math.random() * 10) + 1).toString(),
+                    (Math.floor(Math.random() * 10) + 1).toString(),
+                    (Math.floor(Math.random() * 10) + 1).toString(),
+                    gSeason.number_of_seasons.toString()
+                    ]
             };
             break;
 
@@ -463,21 +502,21 @@ function sendQ() {
                 question: `When the series was first lanuch?`,
                 answer: gSeason.first_air_date.toString().substring(0, 4),
                 answers: [(Math.floor(Math.random() * 61) + 1960).toString(),
-                    (Math.floor(Math.random() * 61) + 1960).toString(),
-                    (Math.floor(Math.random() * 61) + 1960).toString(),
-                    gSeason.first_air_date.YearBirth
+                (Math.floor(Math.random() * 61) + 1960).toString(),
+                (Math.floor(Math.random() * 61) + 1960).toString(),
+                gSeason.first_air_date.toString().substring(0, 4)
                 ]
             };
             break;
 
         case 3: //3. one from the cast
             objQ = {
-                question: `How much episodes there are in ${gSeason.Name}`,
-                answer: gSeason.number_of_episodes,
+                question: `How much episodes there are in ${gSeason.name}`,
+                answer: gSeason.number_of_episodes.toString(),
                 answers: [(Math.floor(Math.random() * 250) + 1).toString(),
-                    (Math.floor(Math.random() * 250) + 1).toString(),
-                    (Math.floor(Math.random() * 250) + 1).toString(),
-                    gSeason.number_of_episodes
+                (Math.floor(Math.random() * 250) + 1).toString(),
+                (Math.floor(Math.random() * 250) + 1).toString(),
+                gSeason.number_of_episodes.toString()
                 ]
             };
             break;
@@ -485,13 +524,35 @@ function sendQ() {
         default:
             alert("Error");
             break;
-    } 
+    }
 
     console.log(objQ);
     showQuestion(objQ);
 }
 
-function showQuestion(objQ){
+function showQuestion(obj) {
+    $(".question").html('');
+    $(".answer-1").html('');
+    $(".answer-2").html('');
+    $(".answer-3").html('');
+    $(".answer-4").html('');
+
+    numbers = []
+
+    while (numbers.length != 4) {
+
+        let num = Math.floor(Math.random() * 4)
+
+        if (!numbers.includes(num)) {
+            numbers.push(num)
+        }
+    }
+
+    $(".question").html(obj.question);
+    $(".answer-1").html(obj.answers[numbers[0]]);
+    $(".answer-2").html(obj.answers[numbers[1]]);
+    $(".answer-3").html(obj.answers[numbers[2]]);
+    $(".answer-4").html(obj.answers[numbers[3]]);
 
 
 
