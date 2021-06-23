@@ -44,6 +44,9 @@ function getFavSeries(genre) {
     ajaxCall("GET", apiSearch, "", getSeriesPopByGenreSuccessCB, getSeriesPopByGenreErrorCB)
 
 }
+function error() {
+
+}
 
 function getSeriesPopByGenreSuccessCB(seriesList) {
     console.log(seriesList);
@@ -589,5 +592,8 @@ function checkAnswer(user_answer) {
         swal("WORNG", "maybe try again :)", "error");
         return
     }
+
+}
+function AddPointsSuccessCB() {
 
 }

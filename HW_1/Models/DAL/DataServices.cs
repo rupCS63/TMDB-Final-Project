@@ -117,12 +117,9 @@ namespace HW_1.Models.DAL
                 throw (ex);
             }
 
-            string sql_insert = "Values(@userid1,@episode_id1)";
-            string prefix = "INSERT INTO Favorites_2021 " + "(userid1,episode_id1)";
-            string CommandText = prefix + sql_insert;
+            string sql_insert = "UPDATE Users_2021 SET points += 5 WHERE userid = " + id;
+            string CommandText =  sql_insert;
             SqlCommand cmd = new SqlCommand(CommandText, con);
-            cmd.Parameters.AddWithValue("@userid1", id);
-            cmd.Parameters.AddWithValue("@episode_id1", episode.Id);
 
 
             try
@@ -248,7 +245,7 @@ namespace HW_1.Models.DAL
                     u.Address = (string)dr["address"];
                     u.IsAdmin = (bool)dr["isAdmin"];
                     u.Genre = (string)dr["genre"];
-
+                    u.Points = (int)dr["points"];
                 }
                 return u;
 

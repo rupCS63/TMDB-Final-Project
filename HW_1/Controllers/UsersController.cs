@@ -41,8 +41,10 @@ namespace HW_1.Controllers
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody] string value)
+        public int Put(int id)
         {
+            User u = new User();
+            return u.addPoints(id);
         }
 
         // DELETE api/<controller>/5
