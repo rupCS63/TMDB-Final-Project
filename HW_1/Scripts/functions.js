@@ -344,37 +344,27 @@ function getTVErrorCB(err) {
     console.log(err);
 }
 
-// CHAT START
+//------------------------CHAT---------------------------
 
 function renderChat(gSeason) {
     initChat(gSeason)
-    // const database = firebase.database()
-    // database.ref('/series/' + gSeason.name).set({
-    //     name: JSON.parse(localStorage.getItem('user-login')).Name,
-    //     message: "Hello"
-    // });
-
 }
 
-
-function initChat() {
+function initChat(gSeason) {
     $('.chat').show();
     $("#chat-name").html(`${gSeason.name} Chat`)
     active = false;
     msgArr = [];
-    chat = firebase.database().ref(gSeason.name);
+    chat = firebase.database().ref(gSeason.name); //ref = the series 
     reder_messages = document.getElementById("chat-messages");
     $('#chat-name').val(gSeason.name + ' Chat')
     // msg = 'hey1'
     // chat.push().set({"msg":msg,"name":JSON.parse(localStorage.getItem('user-login')).Name});
     getMSGfromDB()
-    // listen to incoming messages
     initSentBTN()
-    listenToNewMessages()
-
-
-
+    listenToNewMessages(gSeason);// listen to incoming messages
 }
+
 function initSentBTN() {
     $("#chat-input").keyup(function (event) {
         if (event.keyCode === 13) {
@@ -383,13 +373,14 @@ function initSentBTN() {
     });
 }
 
-function listenToNewMessages() {
-    // child_added will be evoked for every child that was added
-    // on the first entry, it will bring all the childs
+function listenToNewMessages(gSeason) {
+    console.log(gSeason); //^^
+    console.log(user.Id); //^^
     chat.on("child_added", snapshot => {
         msg = {
             name: snapshot.val().name,
             msg: snapshot.val().msg,
+            userid: user.Id,
         }
         msgArr.push(msg)
         printMessage(msg);
@@ -400,13 +391,14 @@ function printMessage(msg) {
     reder_messages.innerHTML += str;
 }
 
-function AddMSG() {
+function AddMSG(msg1) {
     let msg = $('#chat-input').val()
     if (msg === "") {
         return
     }
     let name = JSON.parse(localStorage.getItem('user-login')).Name
-    chat.push().set({ "msg": msg, "name": name });
+    let userid = JSON.parse(localStorage.getItem('user-login')).Id
+    chat.push().set({ "msg": msg, "name": name, "userid": userid });
     $('#chat-input').val('')
     return
 }
@@ -420,6 +412,7 @@ function getMSGfromDB() {
             msg = {
                 msg: element.val().msg,
                 name: element.val().name,
+                userid: element.val().userid,
             }
             msgArr.push(msg)
         });
@@ -436,9 +429,7 @@ function printMessages(msgArr) {
     }
     reder_messages.innerHTML = str;
 }
-// CHAT END
-
-
+//----------------------------END----------------------------------
 
 //Quiz:
 
