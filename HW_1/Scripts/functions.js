@@ -331,10 +331,8 @@ function initChat(){
     msgArr = [];
     chat = firebase.database().ref(gSeason.name);
     reder_messages = document.getElementById("chat-messages");
-    $('#chat-name').val(gSeason.name + ' Chat')
-    // msg = 'hey1'
-    // chat.push().set({"msg":msg,"name":JSON.parse(localStorage.getItem('user-login')).Name});
-    getMSGfromDB()
+    //$('#chat-name').val(gSeason.name + ' Chat')
+    
     // listen to incoming messages
     initSentBTN()
     listenToNewMessages()
@@ -349,8 +347,7 @@ function initSentBTN(){
 }
 
 function listenToNewMessages() {
-    // child_added will be evoked for every child that was added
-    // on the first entry, it will bring all the childs
+ 
     chat.on("child_added", snapshot => {
         msg = {
             name: snapshot.val().name,
@@ -372,7 +369,8 @@ function AddMSG() {
         return
     }
     let name = JSON.parse(localStorage.getItem('user-login')).Name
-    chat.push().set({"msg":msg,"name":name});
+    let id = JSON.parse(localStorage.getItem('user-login')).Id
+    chat.push().set({"msg":msg,"name":name,"id":id});
     $('#chat-input').val('')
     return
 }
@@ -385,7 +383,8 @@ function getMSGfromDB() {
         snapshot.forEach(element => {
             msg = {
             msg:element.val().msg,
-            name:element.val().name,
+            name: element.val().name,
+            id: element.val().id
         }
          msgArr.push(msg)
         });
@@ -402,7 +401,7 @@ function printMessages(msgArr){
     }
     reder_messages.innerHTML = str;
 }
-// CHAT END
+// -----------------CHAT END-----------------
 
 
 
@@ -432,37 +431,8 @@ window.onclick = function (event) {
         modal.style.display = "none";
     }
 }
+//Quiz END:
 
-$(function () {
-    var loading = $('#loadbar').hide();
-    $(document)
-        .ajaxStart(function () {
-            loading.show();
-        }).ajaxStop(function () {
-            loading.hide();
-        });
-
-    $("label.btn").on('click', function () {
-        var choice = $(this).find('input:radio').val();
-        $('#loadbar').show();
-        $('#quiz').fadeOut();
-        setTimeout(function () {
-            $("#answer").html($(this).checking(choice));
-            $('#quiz').show();
-            $('#loadbar').fadeOut();
-            /* something else */
-        }, 1500);
-    });
-
-    $ans = 3;
-
-    $.fn.checking = function (ck) {
-        if (ck != $ans)
-            return 'INCORRECT';
-        else
-            return 'CORRECT';
-    };
-});	
 
 //return: obj: q,4 answers, answer.
 function sendQ() {
