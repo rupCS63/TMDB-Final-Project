@@ -447,7 +447,7 @@ function iconUserChat(user_id) {
     let address = "../Images/";
     let countMsgOfUser = parseInt(countMsgUser(user_id));
 
-    switch (countMsgOfUser) {
+    switch (true) {
         case (countMsgOfUser < 5):// only blue
             address += "1";
             break;
