@@ -112,6 +112,29 @@
         .series-table {
             grid-area: series-table;
         }
+
+        .myButton {
+            background-color: #0059fd;
+            border-radius: 28px;
+            border: 1px solid #009cfd85;
+            display: inline-block;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 17px;
+            text-decoration: none;
+            text-shadow: 0px 1px 0px #2f6627;
+            margin-left: 10px;
+        }
+
+        .myButton:hover {
+            background-color: #0059fda4;
+        }
+
+        .myButton:active {
+            position: relative;
+            top: 1px;
+        }
     </style>
 
     <script>
@@ -221,11 +244,21 @@
             <div class="wellcome"></div>
             <div class="disconnect-btn"></div>
         </div>
+
+        <!--Back Home button-->
+        <div class="back-home-btn">
+            <a href="../Pages/index.html">
+                <button class="myButton" id="back-home-btn1">
+                    Home Page
+                </button>
+            </a>
+        </div>
+
         <div class="text">Users Table</div>
         <div class="user-table">
             <table id="user-table" class="display nowrap">
                 <thead>
-                    <tr>    
+                    <tr>
                         <th>Id</th>
                         <th>Name</th>
                         <th>Last Name</th>
@@ -246,29 +279,29 @@
             <table id="tv-show-table" class="display nowrap">
                 <thead>
                     <tr>
-                        <th>Episodes Name</th> 
+                        <th>Episodes Name</th>
                         <th>Air Date</th>
-                        <th>Season Number</th> 
+                        <th>Season Number</th>
                         <th>Likes</th>
                     </tr>
                 </thead>
             </table>
         </div>
-            <div class="text-3">Series Table</div>
-            <div class="series-table">
-                <table id="series-table" class="display nowrap">
-                    <thead>
-                        <tr>
-                            <th>Series Name</th>
-                            <th>Language</th>
-                            <th>Country</th>
-                            <th>First Air Time</th>
-                            <th>Likes</th>
+        <div class="text-3">Series Table</div>
+        <div class="series-table">
+            <table id="series-table" class="display nowrap">
+                <thead>
+                    <tr>
+                        <th>Series Name</th>
+                        <th>Language</th>
+                        <th>Country</th>
+                        <th>First Air Time</th>
+                        <th>Likes</th>
 
-                        </tr>
-                    </thead>
-                </table>
-            </div>
+                    </tr>
+                </thead>
+            </table>
+        </div>
     </div>
 
 

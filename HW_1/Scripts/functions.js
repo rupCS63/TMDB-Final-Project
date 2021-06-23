@@ -433,7 +433,6 @@ window.onclick = function (event) {
     }
 }
 
-
 $(function () {
     var loading = $('#loadbar').hide();
     $(document)
