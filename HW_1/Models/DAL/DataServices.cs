@@ -39,8 +39,8 @@ namespace HW_1.Models.DAL
             {
                 User temp = (User)Obj;
                 // use a string builder to create the dynamic string
-                string sql_insert = "Values(@username,@userlastname,@email,@password,@cellphone,@gender,@address,@genre,@yearofbirth)";
-                string prefix = "INSERT INTO Users_2021 " + "(username,userlastname,email,password,cellphone,gender,address,genre,yearofbirth)";
+                string sql_insert = "Values(@username,@userlastname,@email,@password,@cellphone,@gender,@address,@isAdmin,@genre,@yearofbirth)";
+                string prefix = "INSERT INTO Users_2021 " + "(username,userlastname,email,password,cellphone,gender,address,isAdmin,genre,yearofbirth)";
                 string CommandText = prefix + sql_insert;
                 SqlCommand cmd = new SqlCommand(CommandText, con);
                 cmd.Parameters.AddWithValue("@username", temp.Name);
@@ -50,10 +50,9 @@ namespace HW_1.Models.DAL
                 cmd.Parameters.AddWithValue("@cellphone", temp.Cellphone);
                 cmd.Parameters.AddWithValue("@gender", temp.Gender);
                 cmd.Parameters.AddWithValue("@address", temp.Address);
+                cmd.Parameters.AddWithValue("@isAdmin", 0); //Defualt - 0, to admin need to chage in sql command
                 cmd.Parameters.AddWithValue("@genre", temp.Genre);
                 cmd.Parameters.AddWithValue("@yearofbirth", temp.YearBirth);
-
-
 
                 return cmd;
             }

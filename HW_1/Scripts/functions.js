@@ -173,7 +173,7 @@ function postUser() {
 }
 
 function postUserSuccessCB() {
-    alert("user added");
+    alert("User added. Please login ");
     //add to localStorage
 }
 
