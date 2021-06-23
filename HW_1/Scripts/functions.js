@@ -358,10 +358,8 @@ function initChat(gSeason) {
     chat = firebase.database().ref(gSeason.name); //ref = the series 
     reder_messages = document.getElementById("chat-messages");
     $('#chat-name').val(gSeason.name + ' Chat')
-    // msg = 'hey1'
-    // chat.push().set({"msg":msg,"name":JSON.parse(localStorage.getItem('user-login')).Name});
-    getMSGfromDB()
-    initSentBTN()
+    getMSGfromDB();
+    initSentBTN();
     listenToNewMessages(gSeason);// listen to incoming messages
 }
 
@@ -380,7 +378,7 @@ function listenToNewMessages(gSeason) {
         msg = {
             name: snapshot.val().name,
             msg: snapshot.val().msg,
-            userid: user.Id,
+            userid: sanpshot.val().userid,
         }
         msgArr.push(msg)
         printMessage(msg);
@@ -388,25 +386,24 @@ function listenToNewMessages(gSeason) {
 }
 function printMessage(msg) {
     let str = `<div class="message">${msg.name}: ${msg.msg}</div>`;
+    //let temp = countMsgUser(msg.userid);
+    //console.lo);
     reder_messages.innerHTML += str;
 }
 
 function AddMSG(msg1) {
-    let msg = $('#chat-input').val()
-    if (msg === "") {
-        return
-    }
-    let name = JSON.parse(localStorage.getItem('user-login')).Name
-    let userid = JSON.parse(localStorage.getItem('user-login')).Id
+    let msg = $('#chat-input').val();
+    if (msg === "") { return; } //msg is null
+    let name = JSON.parse(localStorage.getItem('user-login')).Name;
+    let userid = JSON.parse(localStorage.getItem('user-login')).Id;
+
     chat.push().set({ "msg": msg, "name": name, "userid": userid });
     $('#chat-input').val('')
-    return
+    return;
 }
 
 function getMSGfromDB() {
     msgArr = [];
-    // once listens to an event and then deletes the listner
-    // it is usually used to initially bring data
     chat.once("value", snapshot => {
         snapshot.forEach(element => {
             msg = {
@@ -418,7 +415,6 @@ function getMSGfromDB() {
         });
         printMessages(msgArr);
     })
-
 }
 
 function printMessages(msgArr) {
@@ -428,6 +424,29 @@ function printMessages(msgArr) {
         str += `<div class="message">${msg.name}: ${msg.msg}</div>`
     }
     reder_messages.innerHTML = str;
+}
+
+function countMsgUser(user_id) {
+    //aray of count user msg
+    msgArr = [];
+    chat.once("value", snapshot => {
+        snapshot.forEach(element => {
+            msg = {
+                msg: element.val().msg,
+                name: element.val().name,
+                userid: element.val().userid,
+            }
+            msgArr.push(msg)
+        });
+    });
+
+    let countUserMsgs = 0;
+    for (let i = 0; i < msgArr.length; i++) {
+        if (msgArr[i].userid = user_id)
+            countMsgUser++;
+    }
+
+    return countMsgUser;
 }
 //----------------------------END----------------------------------
 
