@@ -447,6 +447,36 @@ function countMsgUser(user_id) {
 
     return countUserMsgs;
 }
+
+//return the address user's icon in the chat 
+function iconUserChat(user_id) {
+    let address = "...\Images\iconschat\\";
+    let countMsgOfUser = countMsgUser(user_id);
+
+    switch (countMsgOfUser) {
+        case countMsgOfUser >= 5 && countMsgOfUser < 10: //green crown - 5
+            address += "5";
+            break;
+
+        case countMsgOfUser > 10 && countMsgOfUser < 20: //red crown - 10
+            address += "10";
+            break;
+
+        case countMsgOfUser >= 20 && countMsgOfUser < 50: //yellow crown - 20
+            address += "20";
+            break;
+
+        case countMsgOfUser >= 50 && countMsgOfUser < 100: //blue crown - 50 
+            address += "50";
+            break;
+
+        default: //black and gold crown - 100
+            address += "100";
+            break;          
+    }
+
+    return address;
+}
 //----------------------------END----------------------------------
 
 //Quiz:
@@ -475,11 +505,6 @@ window.onclick = function (event) {
         modal.style.display = "none";
     }
 }
-
-
-
-
-
 
 //return: obj: q,4 answers, answer.
 function sendQ() {
