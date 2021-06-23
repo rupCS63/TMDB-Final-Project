@@ -176,7 +176,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Images\1.jpg" />
+    <Content Include="Images\1.png" />
     <Content Include="Images\10.png" />
     <Content Include="Images\100.png" />
     <Content Include="Images\20.png" />
