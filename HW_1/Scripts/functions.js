@@ -429,25 +429,10 @@ function printMessages(msgArr) {
 //return the number of masseges by user id
 function countMsgUser(user_id) {
 
-    console.log(user_id); //^^
-
-    //get all the massegess
-    let msgArr1 = [];
-    chat.once("value", snapshot => {
-        snapshot.forEach(element => {
-            msg1 = {
-                msg: element.val().msg,
-                name: element.val().name,
-                userid: element.val().userid,
-            }
-            msgArr1.push(msg1)
-        });
-    });
-
     //counting the apperence in the array
     let countUserMsgs = 0;
     for (let i = 0; i < msgArr.length; i++) {
-        if (msgArr1[i].userid == user_id)
+        if (msgArr[i].userid == user_id)
             countUserMsgs++;
     }
 
@@ -459,26 +444,27 @@ function countMsgUser(user_id) {
 //return the address user's icon in the chat 
 function iconUserChat(user_id) {
 
-    let address = "Images\\";
-    let countMsgOfUser = countMsgUser(user_id);
+    let address = "../Images/";
+    let countMsgOfUser = parseInt(countMsgUser(user_id));
 
     switch (countMsgOfUser) {
-        case countMsgOfUser < 5 :// only blue
+        case (countMsgOfUser < 5):// only blue
             address += "1";
             break;
-        case countMsgOfUser >= 5 && countMsgOfUser < 10: //green crown - 5
+
+        case (countMsgOfUser >= 5 && countMsgOfUser < 10): //green crown - 5
             address += "5";
             break;
 
-        case countMsgOfUser > 10 && countMsgOfUser < 20: //red crown - 10
+        case (countMsgOfUser > 10 && countMsgOfUser < 20): //red crown - 10
             address += "10";
             break;
 
-        case countMsgOfUser >= 20 && countMsgOfUser < 50: //yellow crown - 20
+        case (countMsgOfUser >= 20 && countMsgOfUser < 50): //yellow crown - 20
             address += "20";
             break;
 
-        case countMsgOfUser >= 50 && countMsgOfUser < 100: //blue crown - 50 
+        case (countMsgOfUser >= 50 && countMsgOfUser < 100): //blue crown - 50 
             address += "50";
             break;
 
