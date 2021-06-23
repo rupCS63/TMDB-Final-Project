@@ -382,10 +382,10 @@ function listenToNewMessages(gSeason) {
         printMessage(msg);
     })
 }
+
 function printMessage(msg) {
-    let str = `<div class="message">${msg.name}: ${msg.msg}</div>`;
-    //let countUserMsgs = countMsgUser(msg.userid);
-    //console.log( `number of msg ${msg.name} is ${countUserMsgs}`);
+    let crownEmoji = iconUserChat( JSON.parse(localStorage.getItem('user-login')).Id);
+    let str = `<div class="message"> <img src='${crownEmoji}'> ${msg.name}: ${msg.msg}</div>`;
     reder_messages.innerHTML += str;
 }
 
@@ -416,17 +416,22 @@ function getMSGfromDB() {
 }
 
 function printMessages(msgArr) {
+    let crownEmoji; 
     var str = "";
     for (let index = 0; index < msgArr.length; index++) {
         const msg = msgArr[index];
-        str += `<div class="message">${msg.name}: ${msg.msg}</div>`
+        crownEmoji = iconUserChat(msgArr[index].userid) ;
+        str += `<div class="message"> <img src='${crownEmoji}'> ${msg.name}: ${msg.msg}</div>`
     }
     reder_messages.innerHTML = str;
 }
 
 //return the number of masseges by user id
 function countMsgUser(user_id) {
-    //aray of count user msg
+
+    console.log(user_id); //^^
+
+    //get all the massegess
     let msgArr1 = [];
     chat.once("value", snapshot => {
         snapshot.forEach(element => {
@@ -439,21 +444,28 @@ function countMsgUser(user_id) {
         });
     });
 
+    //counting the apperence in the array
     let countUserMsgs = 0;
     for (let i = 0; i < msgArr.length; i++) {
-        if (msgArr1[i].userid = user_id)
+        if (msgArr1[i].userid == user_id)
             countUserMsgs++;
     }
+
+    console.log(countUserMsgs);//^^
 
     return countUserMsgs;
 }
 
 //return the address user's icon in the chat 
 function iconUserChat(user_id) {
-    let address = "...\Images\iconschat\\";
+
+    let address = "Images\\";
     let countMsgOfUser = countMsgUser(user_id);
 
     switch (countMsgOfUser) {
+        case countMsgOfUser < 5 :// only blue
+            address += "1";
+            break;
         case countMsgOfUser >= 5 && countMsgOfUser < 10: //green crown - 5
             address += "5";
             break;
@@ -475,7 +487,7 @@ function iconUserChat(user_id) {
             break;          
     }
 
-    return address;
+    return address+".png";
 }
 //----------------------------END----------------------------------
 
