@@ -104,8 +104,10 @@ function userLoginToSystme(user) {
     $("#disconnect-btn").show();
 
     $("#welcome-user").html(
-        "<h6>Welcome " + user.Name + " " + user.LastName + "</h6>"
+        "<h6>Welcome " + user.Name + " " + user.LastName + " | Points: " + user.Points + "</h6>"
     );
+    gUser = user
+    gPoints = user.Points;
     if (user.IsAdmin == true) {
         $("#admin-panel-btn1").show();
     }
@@ -116,14 +118,16 @@ function enterUser(user) {
     $("#register-btn").hide();
     $("#login-btn").hide();
     $("#disconnect-btn").show();
-
+    gPoints = user.Points;
+    gUser = user
     $("#welcome-user").html(
-        "<h6>Welcome " + user.Name + " " + user.LastName + "  Points: "+user.Points+"</h6>"
+        "<h6>Welcome " + user.Name + " " + user.LastName + " | Points: "+user.Points+"</h6>"
     );
     if (user.IsAdmin == true) {
         $("#admin-panel-btn1").show();
     }
 }
+
 
 //../api/Users?mail=&password=..
 function loginUser() {
@@ -595,5 +599,12 @@ function checkAnswer(user_answer) {
 
 }
 function AddPointsSuccessCB() {
-
+    var getuser = localStorage.getItem('user-login')
+    getuser = JSON.parse(getuser)
+    getuser.Points += 5
+    localStorage.setItem('user-login', JSON.stringify(getuser))
+    $("#welcome-user").html(
+        "<h6>Welcome " + gUser.Name + " " + gUser.LastName + " | Points: " + JSON.parse(localStorage.getItem('user-login')).Points + "</h6>"
+    );
 }
+
