@@ -11,7 +11,7 @@ $(document).ready(function () {
     $('.chat').hide();
 
     //Randeer popular series by genre (35=comedy)
-    getFavSeries(35);
+    //getFavSeries(35);
 
     user = localStorage.getItem("user-login");
     if (user != null) {
@@ -27,29 +27,28 @@ $(document).ready(function () {
     imagePath = "https://image.tmdb.org/t/p/w500";
 });
 
-//Get the most popular series by genre
+//Get the most popular series by genre -?-
 function getFavSeries(genre) {
     //int genre = genre code
     //https://api.themoviedb.org/3/discover/tv?api_key=1e5a5ee20af326aebb685a34a1868b76&sort_by=popularity.desc&with_genres=35
 
     let apiSearch = `https://api.themoviedb.org/3/discover/tv?api_key=1e5a5ee20af326aebb685a34a1868b76&sort_by=popularity.desc&with_genres= ${genre}`;
 
-    ajaxCall("GET", apiSearch, "", getSeriesPopByGenreSuccessCB, getSeriesPopByGenreErrorCB)
+    ajaxCall("GET", apiSearch, "", getSeriesPopByGenreSuccessCB, error)
 
+}
+
+function error(e) {
+    alert(`Error: ${e.toString()}`);
 }
 
 function getSeriesPopByGenreSuccessCB(seriesList) {
     console.log(seriesList);
 }
 
-function getSeriesPopByGenreErrorCB() {
-    alert("Error");
-}
-
 function disconnectUser() {
     localStorage.clear();
     location.reload();
-
 }
 
 function postSeries(curr_tvshow) {
@@ -70,18 +69,13 @@ function postSeries(curr_tvshow) {
         api,
         JSON.stringify(SeriesObj),
         postSeriesSuccessCB,
-        postSeriesErrorCB
+        error
     );
 }
 
 function postSeriesSuccessCB() {
     console.log("Series added")
     postEpisod(episodnum);
-}
-
-function postSeriesErrorCB() {
-    console.log("Series error")
-
 }
 
 function userLoginToSystme(user) {
@@ -124,12 +118,8 @@ function loginUser() {
     console.log(passwordlogin);
     api = "../api/Users?mail=" + userlogin + "&password=" + passwordlogin;
     console.log(api);
-    ajaxCall("GET", api, "", loginUserSuccessCB, loginUserErrorCB);
+    ajaxCall("GET", api, "", loginUserSuccessCB, error);
     return false;
-}
-
-function loginUserErrorCB(e) {
-    alert(e.responseJSON);
 }
 
 function loginUserSuccessCB(user) {
@@ -177,18 +167,14 @@ function postUser() {
         api,
         JSON.stringify(userObj),
         postUserSuccessCB,
-        postUserErrorCB
+        error
     );
     return false;
 }
 
-function postUserErrorCB() {
-    alert("fail to add user");
-}
-
 function postUserSuccessCB() {
     alert("user added");
-    //add to  localStorage
+    //add to localStorage
 }
 
 function getTV() {
@@ -199,7 +185,7 @@ function getTV() {
     let moreParams = "&language=en-US&page=1&include_adult=false&";
     let query = "query=" + encodeURIComponent(name);
     let apiCall = url + method + api_key + moreParams + query;
-    ajaxCall("GET", apiCall, "", getTVSuccessCB, getTVErrorCB);
+    ajaxCall("GET", apiCall, "", getTVSuccessCB, error);
 }
 
 function getTVSuccessCB(tv) {
@@ -212,7 +198,7 @@ function getTVSuccessCB(tv) {
     let api_key = "api_key=" + key;
     let apiCall = url + method + tvId + "?" + api_key; //^ change seasson 1 to multi
 
-    ajaxCall("GET", apiCall, "", getSeasonSuccessCB, getSeasonErrorCB);
+    ajaxCall("GET", apiCall, "", getSeasonSuccessCB, error);
 }
 
 function renderSeason(season) {
@@ -255,7 +241,7 @@ function getEpisode(value) {
         api_key +
         "&language=en-US";
 
-    ajaxCall("GET", apiCall, "", getEpisodeSuccessCB, getEpisodeErrorCB);
+    ajaxCall("GET", apiCall, "", getEpisodeSuccessCB, error);
 }
 
 function getEpisodeSuccessCB(episod) {
@@ -298,10 +284,11 @@ function postEpisod(i) {
         Description: epi.episodes[i].overview,
         BroadcastDate: epi.episodes[i].air_date,
     };
+
     var user_id = JSON.parse(localStorage.getItem('user-login')).Id;
     let api = "../api/Episodes?id=" + user_id;
-    ajaxCall("POST", api, JSON.stringify(episodeObj), postEpisodSuccessCB, postEpisodErrorCB);
 
+    ajaxCall("POST", api, JSON.stringify(episodeObj), postEpisodSuccessCB, error);
 }
 
 function postEpisodSuccessCB(i) {
@@ -313,35 +300,19 @@ function postEpisodSuccessCB(i) {
     }
 }
 
-function postEpisodErrorCB() {
-    console.log(err);
-}
-
-function getEpisodeErrorCB() {
-    console.log(err);
-}
 
 function getSeasonSuccessCB(season) {
     gSeason = season;
     renderChat(gSeason);
     renderSeason(season);
-    initQuestionbtn();
-   
+    initQuestionbtn();  
 }
+
+//-------------CHAT-----------------
 function initQuestionbtn(){
     $('#quizz-btn').show();
     $('#quizz-btn').html(`Take Question about ${gSeason.name}`)
 }
-
-function getSeasonErrorCB(err) {
-    console.log(err);
-}
-
-function getTVErrorCB(err) {
-    console.log(err);
-}
-
-// CHAT START
 
 function renderChat(gSeason) {
     initChat(gSeason)
@@ -352,7 +323,6 @@ function renderChat(gSeason) {
     // });
 
 }
-
 
 function initChat(){
     $('.chat').show();
@@ -368,10 +338,8 @@ function initChat(){
     // listen to incoming messages
     initSentBTN()
     listenToNewMessages()
-     
-
-
 }
+
 function initSentBTN(){
     $("#chat-input").keyup(function(event) {
         if (event.keyCode === 13) {
@@ -392,6 +360,7 @@ function listenToNewMessages() {
         printMessage(msg);
     })
 }
+
 function printMessage(msg) {
     let str = `<div class="message">${msg.name}: ${msg.msg}</div>`;
     reder_messages.innerHTML += str;
@@ -495,12 +464,6 @@ $(function () {
             return 'CORRECT';
     };
 });	
-
-
-
-
-
-
 
 //return: obj: q,4 answers, answer.
 function sendQ() {
