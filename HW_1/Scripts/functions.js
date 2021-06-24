@@ -310,35 +310,36 @@ function getRecommendationsSuccessCB(recommendations) {
     console.log(recommendations[0].Id)
     //https://api.themoviedb.org/3/tv/1668/recommendations?api_key=1e5a5ee20af326aebb685a34a1868b76&language=en-US&page=1
     for (var i = 0; i < recommendations.length; i++) {
-            recommend = recommendations[i].Id
-            fetch("https://api.themoviedb.org/3/tv/"+recommend+"/recommendations?api_key=1e5a5ee20af326aebb685a34a1868b76&language=en-US&page=1")
-                .then(response => response.json())
-                .then(data => console.log(data))
-                .catch(err => console.error(err));
-            console.log(i)
-            console.log(recommend)
-    }
-
-    //$(".render-recommendations").html(`<div class="scrollbar" id="style-15">
-    //        <div class="force-overflow">
-    //        </div>
-    //        </div>`);
-    //for (var i = 0; i < episod.episodes.length; i++) {
-    //    x = JSON.stringify(curr_tvshow).split("'").join('')
+        recommend = recommendations[i].Id
+        fetch("https://api.themoviedb.org/3/tv/" + recommend + "/recommendations?api_key=1e5a5ee20af326aebb685a34a1868b76&language=en-US&page=1")
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(err => console.error(err));
+        console.log(i)
+        console.log(recommend)
 
 
-    //    poster =
-    //        "https://image.tmdb.org/t/p/w500" + episod.episodes[i].still_path;
-    //    imgURL = "<img id='poster' src='" + poster + "'/>";
-    //    $(".force-overflow").append(
-    //        `<div class="episodecard"> ${imgURL} 
-    //                    <h4 id="episod-name">${episod.episodes[i].name}</h4>
-    //                    <h6 id="episod-date">${episod.episodes[i].air_date}</h6>
-    //                    <button onclick='savenumber(${i});postSeries(${x})'; type='button' id="addtofav-btn" class='myButton'>Add to favorite</button>
+        $(".render-recommendations").html(`<div class="scrollbar" id="style-15">
+            <div class="force-overflow">
+            </div>
+            </div>`);
+        for (var i = 0; i < episod.episodes.length; i++) {
+            x = JSON.stringify(curr_tvshow).split("'").join('')
+
+
+            poster =
+                "https://image.tmdb.org/t/p/w500" + episod.episodes[i].still_path;
+            imgURL = "<img id='poster' src='" + poster + "'/>";
+            $(".force-overflow").append(
+                `<div class="episodecard"> ${imgURL} 
+                        <h4 id="episod-name">${episod.episodes[i].name}</h4>
+                        <h6 id="episod-date">${episod.episodes[i].air_date}</h6>
+                        <button onclick='savenumber(${i});postSeries(${x})'; type='button' id="addtofav-btn" class='myButton'>Add to favorite</button>
                    
-    //                </div>`
-    //    );
-    //}
+                    </div>`
+            );
+        }
+    }
 }
 
 function savenumber(i) {
