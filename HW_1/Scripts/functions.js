@@ -232,10 +232,9 @@ function getTVSuccessCB(tv) {
 }
 
 function renderSeason(season) {
-    let year = JSON.parse(localStorage.getItem('user-login')).YearBirth
-    let genre = JSON.parse(localStorage.getItem('user-login')).Genre
+
     $(".season-render").html(
-        `<select onchange="getEpisode(this.value);getRecommendations(${year},'${genre}');" name="Seasons" id="seasonselect"></select>`
+        `<select onchange="getEpisode(this.value);" name="Seasons" id="seasonselect"></select>`
     );
     //getRecommendations(${year},${genre})
     //$("#seasonselect").append(`<option>Select</option>`)
@@ -299,6 +298,9 @@ function getEpisodeSuccessCB(episod) {
                     </div>`
         );
     }
+    let year = JSON.parse(localStorage.getItem('user-login')).YearBirth
+    let genre = JSON.parse(localStorage.getItem('user-login')).Genre
+    getRecommendations( year , genre );
 }
 function getRecommendations(yearOfBirth, favGenre) {
     apiCall = `../api/series?yearOfBirth=${yearOfBirth}&favGenre=${favGenre}`
@@ -306,86 +308,51 @@ function getRecommendations(yearOfBirth, favGenre) {
 }
 
 function getRecommendationsSuccessCB(recommendations) {
-    //epi = episod;
-    let render_recommendations = []
-    console.log("recommendations")
-    console.log(recommendations)
-    //https://api.themoviedb.org/3/tv/1668/recommendations?api_key=1e5a5ee20af326aebb685a34a1868b76&language=en-US&page=1
+    let urls = []
     for (var i = 0; i < recommendations.length; i++) {
         recommend = recommendations[i].Id
-        !async function () {
-            let data = await fetch("https://api.themoviedb.org/3/tv/" + recommend + "/recommendations?api_key=1e5a5ee20af326aebb685a34a1868b76&language=en-US&page=1")
-                .then((response) => response.json())
-                .then(data => {
-                    return data;
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-
-            for (var i = 0; i < 5; i++) {
-                let obj = {
-                    title: data.results[i].name,
-                    img: data.results[i].poster_path
-                }
-                render_recommendations.push(obj)
-            }
-        }();
-
+        urls.push("https://api.themoviedb.org/3/tv/" + recommend + "/recommendations?api_key=1e5a5ee20af326aebb685a34a1868b76&language=en-US&page=1")
     }
-    renderRecommendations(render_recommendations)
+    let requests = urls.map(url => fetch(url));
+    Promise.all(requests)
+        .then(responses => { return responses; })
+        .then(responses => Promise.all(responses.map(r => r.json())))
+        .then(result => {
+            let render_recommendations = []
+            for (var j = 0; j < result.length; j++) {
+                for (var i = 0; i < 5; i++) {
+                    let obj = {
+                        title: result[j].results[i].name,
+                        img: result[j].results[i].poster_path
+                    }
+                    render_recommendations.push(obj)
+                }
+
+            }
+            renderRecommendations(render_recommendations)
+        });
+         
 }
 
 
 function renderRecommendations(recommendations) {
-        //    recommend = recommendations[i].Id
-        //    fetch("https://api.themoviedb.org/3/tv/" + recommend + "/recommendations?api_key=1e5a5ee20af326aebb685a34a1868b76&language=en-US&page=1")
-        //        .then(response => response.json())
-        //        .then(data => console.log(data))
-        //        .then(
-        //            function (data) {
-        //                for (var i = 0; i < 5; i++) {
-        //                    let obj = {
-        //                        title: data.results[i].name,
-        //                        img: data.results[i].poster_path
-        //                    }
-        //                    render_recommendations.push(obj)
-        //                }
-        //                return;
-        //            })
-
-        //        .catch(error => {
-        //            console.error('Error:', error);
-        //        });
-
-        //}
-        //console.log("render_recommendations")
-
-        //console.log(render_recommendations)
-
-        //console.log(i)
-        //console.log(recommend)
-
+        console.log(recommendations)
 
         $(".render-recommendations").html(`<div class="scrollbar" id="style-15">
             <div class="force-overflow">
             </div>
             </div>`);
-        for (var i = 0; i < render_recommendations.length; i++) {
-            //x = JSON.stringify(curr_tvshow).split("'").join('')
-
-
-            let poster1 = "https://image.tmdb.org/t/p/w500" + render_recommendations[i].img;
-            let imgURL1 = "<img id='poster' src='" + poster1 + "'/>";
-            $(".force-overflow[1]").append(
+         for (var i = 0; i < recommendations.length; i++) {
+            let poster1 = "https://image.tmdb.org/t/p/w500" + recommendations[i].img;
+             let imgURL1 = "<img id='poster' src='" + poster1 + "'/>";
+            $(".force-overflow").append(
                 `<div class="episodecard"> ${imgURL1} 
-                        <h4 id="episod-name">${render_recommendations[i].title}</h4>
+                        <h4 id="episod-name">${recommendations[i].title}</h4>
                    
                     </div>`
             );
 
         }
-        console.log(render_recommendations)
 
 }
 
@@ -541,7 +508,7 @@ function countMsgUser(user_id) {
             countUserMsgs++;
     }
 
-    console.log(countUserMsgs);//^^
+    //console.log(countUserMsgs);//^^
 
     return countUserMsgs;
 }
