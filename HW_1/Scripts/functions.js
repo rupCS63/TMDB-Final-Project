@@ -389,7 +389,7 @@ function printMessage(msg) {
 //ONCLICK func when send
 function AddMSG() {
     msg = $('#chat-input').val();
-    if (msg === "") { return; } //msg is null
+    if (msg === "" || msg == "null") { alert("You can NOT send null as a messege");return; } //msg is null
     let name = JSON.parse(localStorage.getItem('user-login')).Name;
     let userid = JSON.parse(localStorage.getItem('user-login')).Id;
 
