@@ -339,15 +339,14 @@ function renderRecommendations(recommendations) {
         console.log(recommendations)
 
         $(".render-recommendations").html(`<div class="scrollbar" id="style-15">
-            <div class="force-overflow">
+            <div class="force-overflow1">
             </div>
             </div>`);
          for (var i = 0; i < recommendations.length; i++) {
             let poster1 = "https://image.tmdb.org/t/p/w500" + recommendations[i].img;
-             let imgURL1 = "<img id='poster' src='" + poster1 + "'/>";
-            $(".force-overflow").append(
-                `<div class="episodecard"> ${imgURL1} 
-                        <h4 id="episod-name">${recommendations[i].title}</h4>
+             let imgURL1 = "<img id='poster1' src='" + poster1 + "'/>";
+            $(".force-overflow1").append(
+                `<div class="episodecard"> ${imgURL1} <h4 id="episod-name">${recommendations[i].title}</h4>
                    
                     </div>`
             );

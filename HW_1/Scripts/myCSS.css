@@ -52,6 +52,13 @@ h6 {
     border-radius: 10px;
 }
 
+#poster1 {
+    width: 100%;
+    height: 80%;
+    box-shadow: 5px 5px 10px 4px rgb(54 53 53 / 58%);
+    border-radius: 10px;
+}
+
 h6#episod-name {
     margin-left: 5px;
     margin-top: 5px;
