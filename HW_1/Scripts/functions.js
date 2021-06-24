@@ -353,6 +353,7 @@ function renderChat(gSeason) {
     msgArr = []; //create array of massages 
     chat = firebase.database().ref(gSeason.name); //ref = the series 
     reder_messages = document.getElementById("chat-messages"); //catch the DIV in THE BOX
+    reder_messages.html = "";
     $('#chat-name').val(gSeason.name + ' Chat'); //Rander the series name upper to the box
     getMSGfromDB(); //get massges from the fire base database
     initSentBTN();
@@ -372,7 +373,7 @@ function listenToNewMessages() {
         msg = {
             name: snapshot.val().name,
             msg: snapshot.val().msg,
-            userid: JSON.parse(localStorage.getItem('user-login')).Id,
+            userid: snapshot.val().userid,
         }
         msgArr.push(msg)
         printMessage(msg);
@@ -382,11 +383,10 @@ function listenToNewMessages() {
 function printMessage(msg) {
     let crownEmoji = iconUserChat( JSON.parse(localStorage.getItem('user-login')).Id);
     let str = `<div class="message"> <img src='${crownEmoji}'> ${msg.name}: ${msg.msg}</div>`;
-    //AddMSG(); //
     reder_messages.innerHTML += str;
 }
 
-/*
+//ONCLICK func when send
 function AddMSG() {
     msg = $('#chat-input').val();
     if (msg === "") { return; } //msg is null
@@ -397,10 +397,10 @@ function AddMSG() {
     $('#chat-input').val('');
     return;
 }
-*/
+
 
 function getMSGfromDB() {
-    msgArr = []; //DOUBLE -?-
+    msgArr1 = []; //DOUBLE -?-
     //Get all the masseges from firebase
     chat.once("value", snapshot => {
         snapshot.forEach(element => {
@@ -411,19 +411,20 @@ function getMSGfromDB() {
             }
             msgArr.push(msg)
         });
-        printMessages(msgArr);
+        printMessages(msgArr1);
     })
 }
 
-function printMessages(msgArr) {
+function printMessages(msgArr1) {
     let crownEmoji; 
-    var str = "";
+    var str1 = "";
     for (let index = 0; index < msgArr.length; index++) {
-        const msg = msgArr[index];
+        const msg = msgArr1[index];
         crownEmoji = iconUserChat(msgArr[index].userid) ;
-        str += `<div class="message"> <img src='${crownEmoji}'> ${msg.name}: ${msg.msg}</div>`
+        str1 += `<div class="message"> <img src='${crownEmoji}'> ${msg.name}: ${msg.msg}</div>`
     }
-    reder_messages.innerHTML = str;
+    //reder_messages.innerHTML = "";
+    reder_messages.innerHTML = str1;
 }
 
 //return the number of masseges by user id
