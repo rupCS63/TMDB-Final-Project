@@ -409,7 +409,7 @@ function getMSGfromDB() {
                 name: element.val().name,
                 userid: element.val().userid,
             }
-            msgArr.push(msg)
+            msgArr1.push(msg)
         });
         printMessages(msgArr1);
     })
