@@ -233,8 +233,9 @@ function renderSeason(season) {
     let year = JSON.parse(localStorage.getItem('user-login')).YearBirth
     let genre = JSON.parse(localStorage.getItem('user-login')).Genre
     $(".season-render").html(
-        '<select onchange="getEpisode(this.value) getRecommendations(year,genre);" name="Seasons" id="seasonselect"></select>'
+        `<select onchange="getEpisode(this.value);getRecommendations(${year},'${genre}');" name="Seasons" id="seasonselect"></select>`
     );
+    //getRecommendations(${year},${genre})
     //$("#seasonselect").append(`<option>Select</option>`)
     $(".tv-show-name").html(gSeason.name);
     $(".tv-show-overview").html(gSeason.overview);
@@ -305,14 +306,18 @@ function getRecommendations(yearOfBirth, favGenre) {
 function getRecommendationsSuccessCB(recommendations) {
     //epi = episod;
     console.log("recommendations")
-
-    console.log(recommendations)
+    let recommendations_to_render 
+    console.log(recommendations[0].Id)
     //https://api.themoviedb.org/3/tv/1668/recommendations?api_key=1e5a5ee20af326aebb685a34a1868b76&language=en-US&page=1
-    //for (var i = 0; i < recommendations.length; i++) {
-    //    for (var j = 0; j < 3; j++) {
-
-    //    }
-    //}
+    for (var i = 0; i < recommendations.length; i++) {
+            recommend = recommendations[i].Id
+            fetch("https://api.themoviedb.org/3/tv/"+recommend+"/recommendations?api_key=1e5a5ee20af326aebb685a34a1868b76&language=en-US&page=1")
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(err => console.error(err));
+            console.log(i)
+            console.log(recommend)
+    }
 
     //$(".render-recommendations").html(`<div class="scrollbar" id="style-15">
     //        <div class="force-overflow">
