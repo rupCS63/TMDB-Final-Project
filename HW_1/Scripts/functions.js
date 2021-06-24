@@ -307,42 +307,88 @@ function getRecommendations(yearOfBirth, favGenre) {
 
 function getRecommendationsSuccessCB(recommendations) {
     //epi = episod;
+    let render_recommendations = []
     console.log("recommendations")
-    let recommendations_to_render 
-    console.log(recommendations[0].Id)
+    console.log(recommendations)
     //https://api.themoviedb.org/3/tv/1668/recommendations?api_key=1e5a5ee20af326aebb685a34a1868b76&language=en-US&page=1
     for (var i = 0; i < recommendations.length; i++) {
         recommend = recommendations[i].Id
-        fetch("https://api.themoviedb.org/3/tv/" + recommend + "/recommendations?api_key=1e5a5ee20af326aebb685a34a1868b76&language=en-US&page=1")
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(err => console.error(err));
-        console.log(i)
-        console.log(recommend)
+        !async function () {
+            let data = await fetch("https://api.themoviedb.org/3/tv/" + recommend + "/recommendations?api_key=1e5a5ee20af326aebb685a34a1868b76&language=en-US&page=1")
+                .then((response) => response.json())
+                .then(data => {
+                    return data;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
 
+            for (var i = 0; i < 5; i++) {
+                let obj = {
+                    title: data.results[i].name,
+                    img: data.results[i].poster_path
+                }
+                render_recommendations.push(obj)
+            }
+        }();
 
-        //$(".render-recommendations").html(`<div class="scrollbar" id="style-15">
-        //    <div class="force-overflow">
-        //    </div>
-        //    </div>`);
-        //for (var i = 0; i < episod.episodes.length; i++) {
-        //    x = JSON.stringify(curr_tvshow).split("'").join('')
-
-
-        //    poster =
-        //        "https://image.tmdb.org/t/p/w500" + episod.episodes[i].still_path;
-        //    imgURL = "<img id='poster' src='" + poster + "'/>";
-        //    $(".force-overflow").append(
-        //        `<div class="episodecard"> ${imgURL} 
-        //                <h4 id="episod-name">${episod.episodes[i].name}</h4>
-        //                <h6 id="episod-date">${episod.episodes[i].air_date}</h6>
-        //                <button onclick='savenumber(${i});postSeries(${x})'; type='button' id="addtofav-btn" class='myButton'>Add to favorite</button>
-                   
-        //            </div>`
-        //    );
-        
     }
+    renderRecommendations(render_recommendations)
 }
+
+
+function renderRecommendations(recommendations) {
+        //    recommend = recommendations[i].Id
+        //    fetch("https://api.themoviedb.org/3/tv/" + recommend + "/recommendations?api_key=1e5a5ee20af326aebb685a34a1868b76&language=en-US&page=1")
+        //        .then(response => response.json())
+        //        .then(data => console.log(data))
+        //        .then(
+        //            function (data) {
+        //                for (var i = 0; i < 5; i++) {
+        //                    let obj = {
+        //                        title: data.results[i].name,
+        //                        img: data.results[i].poster_path
+        //                    }
+        //                    render_recommendations.push(obj)
+        //                }
+        //                return;
+        //            })
+
+        //        .catch(error => {
+        //            console.error('Error:', error);
+        //        });
+
+        //}
+        //console.log("render_recommendations")
+
+        //console.log(render_recommendations)
+
+        //console.log(i)
+        //console.log(recommend)
+
+
+        $(".render-recommendations").html(`<div class="scrollbar" id="style-15">
+            <div class="force-overflow">
+            </div>
+            </div>`);
+        for (var i = 0; i < render_recommendations.length; i++) {
+            //x = JSON.stringify(curr_tvshow).split("'").join('')
+
+
+            let poster1 = "https://image.tmdb.org/t/p/w500" + render_recommendations[i].img;
+            let imgURL1 = "<img id='poster' src='" + poster1 + "'/>";
+            $(".force-overflow[1]").append(
+                `<div class="episodecard"> ${imgURL1} 
+                        <h4 id="episod-name">${render_recommendations[i].title}</h4>
+                   
+                    </div>`
+            );
+
+        }
+        console.log(render_recommendations)
+
+}
+
 
 function savenumber(i) {
     episodnum = i;
