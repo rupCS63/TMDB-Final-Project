@@ -376,7 +376,8 @@ function listenToNewMessages() {
             userid: snapshot.val().userid,
         }
         msgArr.push(msg)
-        printMessage(msg);
+        //printMessage(msg);
+        getMSGfromDB() 
     })
 }
 
