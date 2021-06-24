@@ -230,8 +230,10 @@ function getTVSuccessCB(tv) {
 }
 
 function renderSeason(season) {
+    let year = JSON.parse(localStorage.getItem('user-login')).YearBirth
+    let genre = JSON.parse(localStorage.getItem('user-login')).Genre
     $(".season-render").html(
-        '<select onchange="getEpisode(this.value);" name="Seasons" id="seasonselect"></select>'
+        '<select onchange="getEpisode(this.value) getRecommendations(year,genre);" name="Seasons" id="seasonselect"></select>'
     );
     //$("#seasonselect").append(`<option>Select</option>`)
     $(".tv-show-name").html(gSeason.name);
@@ -294,6 +296,44 @@ function getEpisodeSuccessCB(episod) {
                     </div>`
         );
     }
+}
+function getRecommendations(yearOfBirth, favGenre) {
+    apiCall = `../api/series?yearOfBirth=${yearOfBirth}&favGenre=${favGenre}`
+    ajaxCall("GET", apiCall, "", getRecommendationsSuccessCB, error);
+}
+
+function getRecommendationsSuccessCB(recommendations) {
+    //epi = episod;
+    console.log("recommendations")
+
+    console.log(recommendations)
+    //https://api.themoviedb.org/3/tv/1668/recommendations?api_key=1e5a5ee20af326aebb685a34a1868b76&language=en-US&page=1
+    //for (var i = 0; i < recommendations.length; i++) {
+    //    for (var j = 0; j < 3; j++) {
+
+    //    }
+    //}
+
+    //$(".render-recommendations").html(`<div class="scrollbar" id="style-15">
+    //        <div class="force-overflow">
+    //        </div>
+    //        </div>`);
+    //for (var i = 0; i < episod.episodes.length; i++) {
+    //    x = JSON.stringify(curr_tvshow).split("'").join('')
+
+
+    //    poster =
+    //        "https://image.tmdb.org/t/p/w500" + episod.episodes[i].still_path;
+    //    imgURL = "<img id='poster' src='" + poster + "'/>";
+    //    $(".force-overflow").append(
+    //        `<div class="episodecard"> ${imgURL} 
+    //                    <h4 id="episod-name">${episod.episodes[i].name}</h4>
+    //                    <h6 id="episod-date">${episod.episodes[i].air_date}</h6>
+    //                    <button onclick='savenumber(${i});postSeries(${x})'; type='button' id="addtofav-btn" class='myButton'>Add to favorite</button>
+                   
+    //                </div>`
+    //    );
+    //}
 }
 
 function savenumber(i) {

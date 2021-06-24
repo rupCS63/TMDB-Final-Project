@@ -18,6 +18,8 @@ namespace HW_1.Controllers
             return seriesList;
         }
 
+
+
         // GET api/<controller>/5
         public string Get(string genre)
         { //get series by genre
@@ -39,6 +41,13 @@ namespace HW_1.Controllers
         // DELETE api/<controller>/5
         public void Delete(int id)
         {
+        }
+
+        // GET api/<controller>/?yearOfBirth=***,favGenre=
+        public List<Series> Get(int yearOfBirth, string favGenre)
+        { //get series by genre
+            Series s = new Series();
+            return s.getRecommendations(yearOfBirth, favGenre);
         }
     }
 }

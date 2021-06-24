@@ -215,7 +215,52 @@ namespace HW_1.Models.DAL
 
             }
         }
-        
+
+        //Get the Recommendations
+        public List<Series> getRecommendations(int yearOfBirth, string favGenre)
+        {
+            SqlConnection con = null;
+            List<Series> SeriesList = new List<Series>();
+
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT TOP 5 COUNT(*) AS occurrences, e.series_id FROM Favorites_2021 AS f INNER JOIN"
+                     + "Episodes_2021 as e ON f.episode_id1 = e.episode_id INNER JOIN"
+                     +  "Users_2021 as u ON u.userid = f.userid1 WHERE u.genre ='"+ favGenre +"'"
+                     +   "AND"
+                     +   "u.yearofbirth > " + (yearOfBirth-5).ToString()+ " AND u.yearofbirth < "+ (yearOfBirth+5).ToString()
+                     +   "ORDER BY occurrences DESC";
+               SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Series s = new Series();
+                    s.Id = (int)dr["seriesid"];
+                    SeriesList.Add(s);
+                }
+
+                return SeriesList;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+        }
+
         //Valid user login
         public User validLoginFromDB(string mail, string password)
         {

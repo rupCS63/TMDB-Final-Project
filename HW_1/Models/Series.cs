@@ -58,5 +58,12 @@ namespace HW_1.Models
             List<Series> sList = ds.GetSeries();
             return sList;
         }
+
+        public List<Series> getRecommendations(int yearOfBirth, string favGenre)
+        {
+            DataServices ds = new DataServices();
+            List<Series> eList = ds.getRecommendations(yearOfBirth, favGenre);
+            return eList;
+        }
     }
 }
