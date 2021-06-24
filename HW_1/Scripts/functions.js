@@ -347,20 +347,16 @@ function getTVErrorCB(err) {
 //------------------------CHAT---------------------------
 
 function renderChat(gSeason) {
-    initChat(gSeason)
-}
-
-function initChat(gSeason) {
-    $('.chat').show();
-    $("#chat-name").html(`${gSeason.name} Chat`)
+    $('.chat').show(); //show the chat box
+    $("#chat-name").html(`${gSeason.name} Chat`); //get the series name
     active = false;
-    msgArr = [];
+    msgArr = []; //create array of massages 
     chat = firebase.database().ref(gSeason.name); //ref = the series 
-    reder_messages = document.getElementById("chat-messages");
-    $('#chat-name').val(gSeason.name + ' Chat')
-    getMSGfromDB();
+    reder_messages = document.getElementById("chat-messages"); //catch the DIV in THE BOX
+    $('#chat-name').val(gSeason.name + ' Chat'); //Rander the series name upper to the box
+    getMSGfromDB(); //get massges from the fire base database
     initSentBTN();
-    listenToNewMessages(gSeason);// listen to incoming messages
+    listenToNewMessages();// listen to incoming messages
 }
 
 function initSentBTN() {
@@ -371,7 +367,7 @@ function initSentBTN() {
     });
 }
 
-function listenToNewMessages(gSeason) {
+function listenToNewMessages() {
     chat.on("child_added", snapshot => {
         msg = {
             name: snapshot.val().name,
@@ -386,22 +382,26 @@ function listenToNewMessages(gSeason) {
 function printMessage(msg) {
     let crownEmoji = iconUserChat( JSON.parse(localStorage.getItem('user-login')).Id);
     let str = `<div class="message"> <img src='${crownEmoji}'> ${msg.name}: ${msg.msg}</div>`;
+    //AddMSG(); //
     reder_messages.innerHTML += str;
 }
 
-function AddMSG(msg1) {
-    let msg = $('#chat-input').val();
+/*
+function AddMSG() {
+    msg = $('#chat-input').val();
     if (msg === "") { return; } //msg is null
     let name = JSON.parse(localStorage.getItem('user-login')).Name;
     let userid = JSON.parse(localStorage.getItem('user-login')).Id;
 
     chat.push().set({ "msg": msg, "name": name, "userid": userid });
-    $('#chat-input').val('')
+    $('#chat-input').val('');
     return;
 }
+*/
 
 function getMSGfromDB() {
-    msgArr = [];
+    msgArr = []; //DOUBLE -?-
+    //Get all the masseges from firebase
     chat.once("value", snapshot => {
         snapshot.forEach(element => {
             msg = {
