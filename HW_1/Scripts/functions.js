@@ -206,6 +206,8 @@ function postUserSuccessCB() {
 }
 
 function getTV() {
+    $(".render-episodes").html("");
+    $(".render-recommendations").html("");
     $(".container-tvshow").html("");
     let name = $("#tvShowName").val();
     let method = "3/search/tv?";
@@ -319,26 +321,26 @@ function getRecommendationsSuccessCB(recommendations) {
         console.log(recommend)
 
 
-        $(".render-recommendations").html(`<div class="scrollbar" id="style-15">
-            <div class="force-overflow">
-            </div>
-            </div>`);
-        for (var i = 0; i < episod.episodes.length; i++) {
-            x = JSON.stringify(curr_tvshow).split("'").join('')
+        //$(".render-recommendations").html(`<div class="scrollbar" id="style-15">
+        //    <div class="force-overflow">
+        //    </div>
+        //    </div>`);
+        //for (var i = 0; i < episod.episodes.length; i++) {
+        //    x = JSON.stringify(curr_tvshow).split("'").join('')
 
 
-            poster =
-                "https://image.tmdb.org/t/p/w500" + episod.episodes[i].still_path;
-            imgURL = "<img id='poster' src='" + poster + "'/>";
-            $(".force-overflow").append(
-                `<div class="episodecard"> ${imgURL} 
-                        <h4 id="episod-name">${episod.episodes[i].name}</h4>
-                        <h6 id="episod-date">${episod.episodes[i].air_date}</h6>
-                        <button onclick='savenumber(${i});postSeries(${x})'; type='button' id="addtofav-btn" class='myButton'>Add to favorite</button>
+        //    poster =
+        //        "https://image.tmdb.org/t/p/w500" + episod.episodes[i].still_path;
+        //    imgURL = "<img id='poster' src='" + poster + "'/>";
+        //    $(".force-overflow").append(
+        //        `<div class="episodecard"> ${imgURL} 
+        //                <h4 id="episod-name">${episod.episodes[i].name}</h4>
+        //                <h6 id="episod-date">${episod.episodes[i].air_date}</h6>
+        //                <button onclick='savenumber(${i});postSeries(${x})'; type='button' id="addtofav-btn" class='myButton'>Add to favorite</button>
                    
-                    </div>`
-            );
-        }
+        //            </div>`
+        //    );
+        
     }
 }
 
