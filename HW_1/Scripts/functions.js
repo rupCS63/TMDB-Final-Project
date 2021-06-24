@@ -376,7 +376,6 @@ function listenToNewMessages() {
             userid: snapshot.val().userid,
         }
         msgArr.push(msg)
-        //printMessage(msg);
         getMSGfromDB() 
     })
 }
@@ -424,7 +423,6 @@ function printMessages(msgArr1) {
         crownEmoji = iconUserChat(msgArr[index].userid) ;
         str1 += `<div class="message"> <img src='${crownEmoji}'> ${msg.name}: ${msg.msg}</div>`
     }
-    //reder_messages.innerHTML = "";
     reder_messages.innerHTML = str1;
 }
 
