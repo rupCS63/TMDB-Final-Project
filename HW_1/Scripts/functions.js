@@ -401,37 +401,22 @@ function getTVErrorCB(err) {
     console.log(err);
 }
 
-// CHAT START
+//------------------------CHAT---------------------------
 
 function renderChat(gSeason) {
-    initChat(gSeason)
-    // const database = firebase.database()
-    // database.ref('/series/' + gSeason.name).set({
-    //     name: JSON.parse(localStorage.getItem('user-login')).Name,
-    //     message: "Hello"
-    // });
-
-}
-
-
-function initChat() {
-    $('.chat').show();
-    $("#chat-name").html(`${gSeason.name} Chat`)
+    $('.chat').show(); //show the chat box
+    $("#chat-name").html(`${gSeason.name} Chat`); //get the series name
     active = false;
-    msgArr = [];
-    chat = firebase.database().ref(gSeason.name);
-    reder_messages = document.getElementById("chat-messages");
-    $('#chat-name').val(gSeason.name + ' Chat')
-    // msg = 'hey1'
-    // chat.push().set({"msg":msg,"name":JSON.parse(localStorage.getItem('user-login')).Name});
-    getMSGfromDB()
-    // listen to incoming messages
-    initSentBTN()
-    listenToNewMessages()
-
-
-
+    msgArr = []; //create array of massages 
+    chat = firebase.database().ref(gSeason.name); //ref = the series 
+    reder_messages = document.getElementById("chat-messages"); //catch the DIV in THE BOX
+    reder_messages.html = "";
+    $('#chat-name').val(gSeason.name + ' Chat'); //Rander the series name upper to the box
+    getMSGfromDB(); //get massges from the fire base database
+    initSentBTN();
+    listenToNewMessages();// listen to incoming messages
 }
+
 function initSentBTN() {
     $("#chat-input").keyup(function (event) {
         if (event.keyCode === 13) {
@@ -441,61 +426,113 @@ function initSentBTN() {
 }
 
 function listenToNewMessages() {
-    // child_added will be evoked for every child that was added
-    // on the first entry, it will bring all the childs
     chat.on("child_added", snapshot => {
         msg = {
             name: snapshot.val().name,
             msg: snapshot.val().msg,
+            userid: snapshot.val().userid,
         }
         msgArr.push(msg)
-        printMessage(msg);
+        getMSGfromDB() 
     })
 }
+
 function printMessage(msg) {
-    let str = `<div class="message">${msg.name}: ${msg.msg}</div>`;
+    let crownEmoji = iconUserChat( JSON.parse(localStorage.getItem('user-login')).Id);
+    let str = `<div class="message"> <img src='${crownEmoji}'> ${msg.name}: ${msg.msg}</div>`;
     reder_messages.innerHTML += str;
 }
 
+//ONCLICK func when send
 function AddMSG() {
-    let msg = $('#chat-input').val()
-    if (msg === "") {
-        return
-    }
-    let name = JSON.parse(localStorage.getItem('user-login')).Name
-    chat.push().set({ "msg": msg, "name": name });
-    $('#chat-input').val('')
-    return
+    msg = $('#chat-input').val();
+    if (msg === "" || msg == "null") { alert("You can NOT send null as a messege");return; } //msg is null
+    let name = JSON.parse(localStorage.getItem('user-login')).Name;
+    let userid = JSON.parse(localStorage.getItem('user-login')).Id;
+
+    chat.push().set({ "msg": msg, "name": name, "userid": userid });
+    $('#chat-input').val('');
+    return;
 }
 
+
 function getMSGfromDB() {
-    msgArr = [];
-    // once listens to an event and then deletes the listner
-    // it is usually used to initially bring data
+    msgArr1 = []; //DOUBLE -?-
+    //Get all the masseges from firebase
     chat.once("value", snapshot => {
         snapshot.forEach(element => {
             msg = {
                 msg: element.val().msg,
                 name: element.val().name,
+                userid: element.val().userid,
             }
-            msgArr.push(msg)
+            msgArr1.push(msg)
         });
-        printMessages(msgArr);
+        printMessages(msgArr1);
     })
-
 }
 
-function printMessages(msgArr) {
-    var str = "";
+function printMessages(msgArr1) {
+    let crownEmoji; 
+    var str1 = "";
     for (let index = 0; index < msgArr.length; index++) {
-        const msg = msgArr[index];
-        str += `<div class="message">${msg.name}: ${msg.msg}</div>`
+        const msg = msgArr1[index];
+        crownEmoji = iconUserChat(msgArr[index].userid) ;
+        str1 += `<div class="message"> <img src='${crownEmoji}'> ${msg.name}: ${msg.msg}</div>`
     }
-    reder_messages.innerHTML = str;
+    reder_messages.innerHTML = str1;
 }
-// CHAT END
 
+//return the number of masseges by user id
+function countMsgUser(user_id) {
 
+    //counting the apperence in the array
+    let countUserMsgs = 0;
+    for (let i = 0; i < msgArr.length; i++) {
+        if (msgArr[i].userid == user_id)
+            countUserMsgs++;
+    }
+
+    console.log(countUserMsgs);//^^
+
+    return countUserMsgs;
+}
+
+//return the address user's icon in the chat 
+function iconUserChat(user_id) {
+
+    let address = "../Images/";
+    let countMsgOfUser = countMsgUser(user_id);
+
+    switch (true) {
+        case (countMsgOfUser < 5):// only blue
+            address += "1";
+            break;
+
+        case (countMsgOfUser >= 5 && countMsgOfUser < 10): //green crown - 5
+            address += "5";
+            break;
+
+        case (countMsgOfUser > 10 && countMsgOfUser < 20): //red crown - 10
+            address += "10";
+            break;
+
+        case (countMsgOfUser >= 20 && countMsgOfUser < 50): //yellow crown - 20
+            address += "20";
+            break;
+
+        case (countMsgOfUser >= 50 && countMsgOfUser < 100): //blue crown - 50 
+            address += "50";
+            break;
+
+        default: //black and gold crown - 100
+            address += "100";
+            break;          
+    }
+
+    return address+".png";
+}
+//----------------------------END----------------------------------
 
 //Quiz:
 
@@ -523,11 +560,6 @@ window.onclick = function (event) {
         modal.style.display = "none";
     }
 }
-
-
-
-
-
 
 //return: obj: q,4 answers, answer.
 function sendQ() {

@@ -176,6 +176,12 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\1.png" />
+    <Content Include="Images\10.png" />
+    <Content Include="Images\100.png" />
+    <Content Include="Images\20.png" />
+    <Content Include="Images\5.png" />
+    <Content Include="Images\50.png" />
     <Content Include="Pages\admin-panel.html" />
     <Content Include="Pages\index.html" />
     <Content Include="Pages\view.html" />
@@ -226,7 +232,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
