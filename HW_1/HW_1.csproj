@@ -182,6 +182,7 @@
     <Content Include="Images\20.png" />
     <Content Include="Images\5.png" />
     <Content Include="Images\50.png" />
+    <Content Include="Images\tmdb-logo-blue.jpg" />
     <Content Include="Pages\admin-panel.html" />
     <Content Include="Pages\index.html" />
     <Content Include="Pages\view.html" />
