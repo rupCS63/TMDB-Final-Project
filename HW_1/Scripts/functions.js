@@ -30,8 +30,6 @@ $(document).ready(function () {
 
         //search episode
         $("#getTV").hide();
-        $("tvShowName").hide();
-        //
     }
 
     episodnum = 0;
@@ -169,8 +167,6 @@ function loginUserSuccessCB(user) {
 
     //search episode
     $("#getTV").show();
-    $("tvShowName").show();
-        //
 }
 
 function postUser() {
@@ -219,7 +215,7 @@ function postUserErrorCB() {
 }
 
 function postUserSuccessCB() {
-    alert("user added");
+    alert("User Added. Please Login");
     //add to  localStorage
 }
 
