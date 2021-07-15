@@ -24,6 +24,15 @@ $(document).ready(function () {
     if (user != null) {
         enterUser(user);
     }
+    else if (user == null) {
+        //favorites episodes
+        $("#fav-btn").hide();
+
+        //search episode
+        $("#getTV").hide();
+        $("tvShowName").hide();
+        //
+    }
 
     episodnum = 0;
 
@@ -153,6 +162,15 @@ function loginUserSuccessCB(user) {
     } else if (user == null) {
         alert("Worng password or username");
     }
+
+
+    //favorites episodes
+    $("#fav-btn").show();
+
+    //search episode
+    $("#getTV").show();
+    $("tvShowName").show();
+        //
 }
 
 function postUser() {
