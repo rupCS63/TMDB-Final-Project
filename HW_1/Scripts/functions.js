@@ -56,7 +56,7 @@ function error() {
 }
 
 function getSeriesPopByGenreSuccessCB(seriesList) {
-    console.log(seriesList);
+    //console.log(seriesList);
 }
 
 function getSeriesPopByGenreErrorCB() {
@@ -92,12 +92,12 @@ function postSeries(curr_tvshow) {
 }
 
 function postSeriesSuccessCB() {
-    console.log("Series added")
+    //console.log("Series added")
     postEpisod(episodnum);
 }
 
 function postSeriesErrorCB() {
-    console.log("Series error")
+    //console.log("Series error")
 
 }
 
@@ -140,11 +140,11 @@ function enterUser(user) {
 function loginUser() {
     document.getElementById("id02").style.display = "none";
     let userlogin = $("#userlogin").val();
-    console.log(userlogin);
+    //console.log(userlogin);
     let passwordlogin = $("#passwordlogin").val();
-    console.log(passwordlogin);
+    //console.log(passwordlogin);
     api = "../api/Users?mail=" + userlogin + "&password=" + passwordlogin;
-    console.log(api);
+    //console.log(api);
     ajaxCall("GET", api, "", loginUserSuccessCB, loginUserErrorCB);
     return false;
 }
@@ -154,7 +154,7 @@ function loginUserErrorCB(e) {
 }
 
 function loginUserSuccessCB(user) {
-    console.log(user);
+    //console.log(user);
     if (user != null) {
         userLoginToSystme(user);
     } else if (user == null) {
@@ -349,7 +349,7 @@ function getRecommendationsSuccessCB(recommendations) {
 
 
 function renderRecommendations(recommendations) {
-        console.log(recommendations)
+        //console.log(recommendations)
 
         $(".render-recommendations").html(`<div class="scrollbar" id="style-15">
             <div class="force-overflow1">
@@ -401,11 +401,11 @@ function postEpisodSuccessCB(i) {
 }
 
 function postEpisodErrorCB() {
-    console.log(err);
+    //console.log(err);
 }
 
 function getEpisodeErrorCB() {
-    console.log(err);
+    //console.log(err);
 }
 
 function getSeasonSuccessCB(season) {
@@ -422,11 +422,11 @@ function initQuestionbtn() {
 }
 
 function getSeasonErrorCB(err) {
-    console.log(err);
+    //console.log(err);
 }
 
 function getTVErrorCB(err) {
-    console.log(err);
+    //console.log(err);
 }
 
 //------------------------CHAT---------------------------
@@ -601,7 +601,7 @@ function renderComments() {
     
     forum = firebase.database().ref('forum/' + gSeason.name)//ref = the series
     forum.push().set({ "msg": "a", "name": "a", "userid": 1 });
-    console.log(forum.key);
+    //console.log(forum.key);
     //reder_messages = document.getElementById("chat-messages"); //catch the DIV in THE BOX
     //reder_messages.html = "";
     //$('#chat-name').val(gSeason.name + ' Chat'); //Rander the series name upper to the box
@@ -684,7 +684,7 @@ function sendQ() {
                     ]
             };
             showQuestion(objQ1);
-            console.log(objQ1);
+            //console.log(objQ1);
             break;
 
         case 2: //2. first air date - year
@@ -698,7 +698,7 @@ function sendQ() {
                 ]
             };
             showQuestion(objQ2);
-            console.log(objQ2);
+            //console.log(objQ2);
             break;
 
         case 3: //3. one from the cast
@@ -712,7 +712,7 @@ function sendQ() {
                 ]
             };
             showQuestion(objQ3);
-            console.log(objQ3);
+            //console.log(objQ3);
             break;
 
         default:
@@ -759,8 +759,8 @@ function showQuestion(the_question) {
 }
 
 function checkAnswer(user_answer) {
-    console.log("user_answer:" + user_answer)
-    console.log("the answer:" + question.answer)
+    //console.log("user_answer:" + user_answer)
+    //console.log("the answer:" + question.answer)
     $(".choose").prop("checked", false);
 
     if (user_answer == question.answer) {
