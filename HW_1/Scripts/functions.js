@@ -24,6 +24,13 @@ $(document).ready(function () {
     if (user != null) {
         enterUser(user);
     }
+    else if (user == null) {
+        //favorites episodes
+        $("#fav-btn").hide();
+
+        //search episode
+        $("#getTV").hide();
+    }
 
     episodnum = 0;
 
@@ -153,6 +160,13 @@ function loginUserSuccessCB(user) {
     } else if (user == null) {
         alert("Worng password or username");
     }
+
+
+    //favorites episodes
+    $("#fav-btn").show();
+
+    //search episode
+    $("#getTV").show();
 }
 
 function postUser() {
@@ -201,7 +215,7 @@ function postUserErrorCB() {
 }
 
 function postUserSuccessCB() {
-    alert("user added");
+    alert("User Added. Please Login");
     //add to  localStorage
 }
 
