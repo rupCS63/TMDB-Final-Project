@@ -236,9 +236,7 @@ function renderSeason(season) {
     $(".season-render").html(
         `<select onchange="getEpisode(this.value);" name="Seasons" id="seasonselect"></select>`
     );
-    //getRecommendations(${year},${genre})
-    //$("#seasonselect").append(`<option>Select</option>`)
-    $(".tv-show-name").html(gSeason.name);
+    $(".tv-show-name").html(`${gSeason.name} <button id="comment-open"><i class="fa fa-comment"  aria-hidden="true"></i></button>`);
     $(".tv-show-overview").html(gSeason.overview);
 
 
@@ -400,6 +398,7 @@ function getSeasonSuccessCB(season) {
     renderChat(gSeason);
     renderSeason(season);
     initQuestionbtn();
+    getCommentModal();
 
 }
 function initQuestionbtn() {
@@ -548,27 +547,98 @@ function iconUserChat(user_id) {
 }
 //----------------------------END----------------------------------
 
-//Quiz:
+////comment:"myModal1"
+function getCommentModal() {
+
+    var modal1 = document.getElementById("myModal1");
+
+    // Get the button that opens the modal
+    var btn1 = document.getElementById("comment-open");
+
+    // Get the <span> element that closes the modals
+    /*var span1 = document.getElementById("send-quiz1");*/
+
+    // When the user clicks on the button, open the modal
+    btn1.onclick = function () {
+        modal1.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    //span1.onclick = function () {
+    //    modal.style.display = "none";
+    //}
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal1) {
+            modal1.style.display = "none";
+        }
+    }
+
+    $("#comment-open").click(function () {
+        renderComments();
+    });
+    
+}
+
+function renderComments() {
+    
+    
+    forum = firebase.database().ref('forum/' + gSeason.name)//ref = the series
+    forum.push().set({ "msg": "a", "name": "a", "userid": 1 });
+    console.log(forum.key);
+    //reder_messages = document.getElementById("chat-messages"); //catch the DIV in THE BOX
+    //reder_messages.html = "";
+    //$('#chat-name').val(gSeason.name + ' Chat'); //Rander the series name upper to the box
+    //getMSGfromDB(); //get massges from the fire base database
+    //initSentBTN();
+    //listenToNewMessages();// listen to incoming messages
+}
+
+function getCommentsfromDB() {
+    CommentsArr = []; //DOUBLE -?-
+    //Get all the masseges from firebase
+    forum.once("value", snapshot => {
+        snapshot.forEach(element => {
+            msg = {
+                msg: element.val().msg,
+                name: element.val().name,
+                userid: element.val().userid,
+            }
+            CommentsArr.push(msg)
+        });
+        printMessages(CommentsArr);
+    })
+}
+
+function printComments(CommentsArr) {
+    let crownEmoji;
+    var str1 = "";
+    for (let index = 0; index < msgArr.length; index++) {
+        const msg = CommentsArr[index];
+        crownEmoji = iconUserChat(CommentsArr[index].userid);
+        str1 += `<div class="message"> <img src='${crownEmoji}'> ${msg.name}: ${msg.msg}</div>`
+    }
+    reder_messages.innerHTML = str1;
+}
+
+
+//Quiz: myModal
 
 var modal = document.getElementById("myModal");
 
-// Get the button that opens the modal
 var btn = document.getElementById("quizz-btn1");
 
-// Get the <span> element that closes the modals
 var span = document.getElementById("send-quiz");
 
-// When the user clicks on the button, open the modal
 btn.onclick = function () {
     modal.style.display = "block";
 }
 
-// When the user clicks on <span> (x), close the modal
 span.onclick = function () {
     modal.style.display = "none";
 }
 
-// When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";
