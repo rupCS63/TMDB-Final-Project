@@ -250,8 +250,9 @@ function renderSeason(season) {
     $(".season-render").html(
         `<select onchange="getEpisode(this.value);" name="Seasons" id="seasonselect"></select>`
     );
-    $(".tv-show-name").html(`${gSeason.name} <button id="comment-open"><i class="fa fa-comment"  aria-hidden="true"></i></button>`);
+    $(".tv-show-name").html(`${gSeason.name}`);
     $(".tv-show-overview").html(gSeason.overview);
+   
 
 
     for (var i = 0; i < season.seasons.length; i++) {
