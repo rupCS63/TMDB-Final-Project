@@ -1,0 +1,8 @@
+*admin users:
+omer@sda.com	Omer3020
+kfir@sda.com	Kfir123123
+
+*nonadmin users:
+anatziony1@gmail.com	anat1234H
+omer2@sda.com	Omer30203020
+shany.t@gmail.com	Shany1234
