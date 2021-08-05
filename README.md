@@ -18,3 +18,7 @@ Include all the episodes that the user liked, show by the series' name
 ## Enter Page
 Include register and login (connect and verify in the servers)
 ![image](https://user-images.githubusercontent.com/83393930/128298716-f0ee1d71-5a6c-44a4-a786-452b50ff8254.png)<br/>
+
+## SQL Server
+The tables are: Episodes, Series, Users, Favorites
+![image](https://user-images.githubusercontent.com/83393930/128299315-62ad8bd9-96ee-44c3-a247-a3cd51f7b75c.png)<br/>
