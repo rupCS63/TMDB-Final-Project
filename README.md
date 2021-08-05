@@ -1,7 +1,7 @@
 # TMDB-Final-Project - Server Side Course
 
 ![Omer Leibu](https://github.com/omer3020) & ![Kfir Gisman](https://github.com/Kfir-G) <br/>
-rupigroupGroupNumber63/ bgroup63<br/>
+Developed Front and Backend project from scratch: customer watch list of series form TMdb data base. The website includes admin panel with users’ statistics, recommended series based on several parameters, real time chat base on firebase with changing emojis. Using API.net, JQUERY, JSON, SQL, Firebase, JavaScript, HTML and CSS. <br/>
 https://proj.ruppin.ac.il/bgroup63/prod/Pages/index.html <br/>
 
 ## Home Page
