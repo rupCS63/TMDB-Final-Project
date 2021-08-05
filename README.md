@@ -3,12 +3,13 @@
 ![Omer Leibu](https://github.com/omer3020) & ![Kfir Gisman](https://github.com/Kfir-G) <br/>
 rupigroupGroupNumber63/ bgroup63<br/>
 https://proj.ruppin.ac.il/bgroup63/prod/Pages/index.html <br/>
+
 ## Home Page
 Include search panel, Series description, Season Selector, Episodes list to add to your favorites, <br/> Chat that include emojis based on level of involvement, Quiz based on the series.
 ![image](https://user-images.githubusercontent.com/57500876/126068933-810b9872-3f58-4b40-9c57-a59822a92cf4.png) <br/>
 
 ##  Admin Panel
-Include all the tables with other statistics
+Include all the tables with other statistics such as: how many people add each episode, how many people add episodes in each series.
 ![image](https://user-images.githubusercontent.com/57500876/126069803-7970acbd-a3c6-4844-a85b-dab9d5d73344.png)<br/>
 
 ## Favorites User's Episodes
