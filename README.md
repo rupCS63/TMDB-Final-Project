@@ -14,3 +14,7 @@ Include all the tables with other statistics
 ## Favorites User's Episodes
 Include all the episodes that the user liked, show by the series' name
 ![image](https://user-images.githubusercontent.com/57500876/126069053-f946685b-f9f0-44cf-b938-b21daae19f12.png) <br/>
+
+## Enter Page
+Include register and login (connect and verify in the servers)
+![image](https://user-images.githubusercontent.com/83393930/128298716-f0ee1d71-5a6c-44a4-a786-452b50ff8254.png)<br/>
