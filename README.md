@@ -5,7 +5,7 @@ rupigroupGroupNumber63/ bgroup63<br/>
 https://proj.ruppin.ac.il/bgroup63/prod/Pages/index.html <br/>
 
 ## Home Page
-Include search panel, Series description, Season Selector, Episodes list to add to your favorites, <br/> Chat that include emojis based on level of involvement, Quiz based on the series.
+Include: search panel, Series description, Season Selector, Episodes list to add to your favorites, <br/> Chat that include emojis based on level of involvement, Quiz based on the series (adding points for correct answer).
 ![image](https://user-images.githubusercontent.com/57500876/126068933-810b9872-3f58-4b40-9c57-a59822a92cf4.png) <br/>
 
 ##  Admin Panel
